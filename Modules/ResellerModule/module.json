@@ -1,0 +1,13 @@
+{
+    "name": "Reseller Module",
+    "alias": "resellermodule",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\ResellerModule\\Providers\\ResellerModuleServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

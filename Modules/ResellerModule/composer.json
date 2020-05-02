@@ -1,0 +1,25 @@
+{
+    "name": "nwidart/resellermodule",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\ResellerModule\\Providers\\ResellerModuleServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\ResellerModule\\": ""
+        }
+    }
+}
