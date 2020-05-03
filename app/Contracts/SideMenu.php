@@ -10,6 +10,11 @@ interface SideMenu {
     public function setUrl($url);
     public function getUrl();
 
+    public function setIcon($icon);
+    public function getIcon();
+
     public function toggleable();
+
+    public function isToggleable() : bool;
 
 }

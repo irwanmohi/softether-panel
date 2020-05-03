@@ -25,11 +25,26 @@
     <!-- Morris Chart Css-->
     <link href="/assets/plugins/morrisjs/morris.css" rel="stylesheet" />
 
+    <link href="/assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
     <!-- Custom Css -->
     <link href="/assets/css/style.css" rel="stylesheet">
     <link href="/assets/css/themes/all-themes.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="/assets/css/custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+    <style type="text/css" media="screen">
+        .modal-loader {
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+
+    @yield('css')
 </head>
 
 <body class="theme-deep-purple">
@@ -75,8 +90,47 @@
                 <h2>@yield('page_title')</h2>
             </div>
 
+            @yield('content')
+
         </div>
     </section>
+
+    <!-- REUSABLE MODAL -->
+
+    <div class="modal fade " id="setting_modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content modal-col-deep-purple">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="defaultModalLabel">Setting</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="modal-loader">
+                        <div class="loader">
+                            <div class="preloader">
+                                <div class="spinner-layer pl-white">
+                                    <div class="circle-clipper left">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="circle-clipper right">
+                                        <div class="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <p>Please wait...</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link waves-effect" onclick="$(this).parent().parent().find('button:first').prop('type', 'submit').click()">SAVE CHANGES</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL -->
 
     <!-- Jquery Core Js -->
     <script src="/assets/plugins/jquery/jquery.min.js"></script>
@@ -103,22 +157,15 @@
     <!-- ChartJs -->
     <script src="/assets/plugins/chartjs/Chart.bundle.js"></script>
 
-    <!-- Flot Charts Plugin Js -->
-    <script src="/assets/plugins/flot-charts/jquery.flot.js"></script>
-    <script src="/assets/plugins/flot-charts/jquery.flot.resize.js"></script>
-    <script src="/assets/plugins/flot-charts/jquery.flot.pie.js"></script>
-    <script src="/assets/plugins/flot-charts/jquery.flot.categories.js"></script>
-    <script src="/assets/plugins/flot-charts/jquery.flot.time.js"></script>
-
     <!-- Sparkline Chart Plugin Js -->
     <script src="/assets/plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
+     <script src="/assets/plugins/sweetalert/sweetalert.min.js"></script>
+
     <!-- Custom Js -->
     <script src="/assets/js/admin.js"></script>
-    <script src="/assets/js/pages/index.js"></script>
 
-    <!-- Demo Js -->
-    <script src="/assets/js/demo.js"></script>
+    @yield('js')
 </body>
 
 </html>

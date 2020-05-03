@@ -2,6 +2,8 @@
 
 namespace Modules\ResellerModule\Providers;
 
+use MenuManager;
+use App\Contracts\SideMenu;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
@@ -29,6 +31,9 @@ class ResellerModuleServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+
+        // app level
+        $this->registerMenu();
     }
 
     /**
@@ -121,5 +126,15 @@ class ResellerModuleServiceProvider extends ServiceProvider
             }
         }
         return $paths;
+    }
+
+    protected function registerMenu() {
+        $adminMenu = [
+            app(SideMenu::class)->setName('Reseller Setting')->setUrl('/admin/reseller-setting')
+        ];
+
+        foreach ($adminMenu as $menu) {
+            MenuManager::adminMenu($menu);
+        }
     }
 }

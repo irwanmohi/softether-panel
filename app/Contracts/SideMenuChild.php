@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Contracts;
+
 interface SideMenuChild {
 
     public function setName($name);

@@ -16,6 +16,8 @@ class ResellerModuleDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->call(AddResellerModuleGlobalSettingsTableSeeder::class);
+
         // $this->call("OthersTableSeeder");
     }
 }

@@ -178,6 +178,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\PluginManagerServiceProvider::class,
+        App\Providers\MenuServiceProvider::class,
 
     ],
 
@@ -231,6 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PluginManager' => App\Facades\PluginManager::class,
+        'MenuManager' => App\Facades\MenuManager::class,
 
     ],
 

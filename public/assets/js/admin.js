@@ -44,7 +44,7 @@ $.AdminBSB.options = {
 
 /* Left Sidebar - Function =================================================================================================
 *  You can manage the left sidebar menu options
-*  
+*
 */
 $.AdminBSB.leftSideBar = {
     activate: function () {
@@ -166,7 +166,7 @@ $.AdminBSB.leftSideBar = {
 
 /* Right Sidebar - Function ================================================================================================
 *  You can manage the right sidebar menu options
-*  
+*
 */
 $.AdminBSB.rightSideBar = {
     activate: function () {
@@ -198,7 +198,7 @@ $.AdminBSB.rightSideBar = {
 
 /* Searchbar - Function ================================================================================================
 *  You can manage the search bar
-*  
+*
 */
 var $searchBar = $('.search-bar');
 $.AdminBSB.search = {
@@ -235,7 +235,7 @@ $.AdminBSB.search = {
 
 /* Navbar - Function =======================================================================================================
 *  You can manage the navbar
-*  
+*
 */
 $.AdminBSB.navbar = {
     activate: function () {
@@ -265,7 +265,7 @@ $.AdminBSB.navbar = {
 
 /* Input - Function ========================================================================================================
 *  You can manage the inputs(also textareas) with name of class 'form-control'
-*  
+*
 */
 $.AdminBSB.input = {
     activate: function ($parentSelector) {
@@ -304,7 +304,7 @@ $.AdminBSB.input = {
 
 /* Form - Select - Function ================================================================================================
 *  You can manage the 'select' of form elements
-*  
+*
 */
 $.AdminBSB.select = {
     activate: function () {
@@ -315,7 +315,7 @@ $.AdminBSB.select = {
 
 /* DropdownMenu - Function =================================================================================================
 *  You can manage the dropdown menu
-*  
+*
 */
 
 $.AdminBSB.dropdownMenu = {
@@ -393,7 +393,7 @@ $.AdminBSB.dropdownMenu = {
 
 /* Browser - Function ======================================================================================================
 *  You can manage browser
-*  
+*
 */
 var edge = 'Microsoft Edge';
 var ie10 = 'Internet Explorer 10';
@@ -454,6 +454,56 @@ $.AdminBSB.browser = {
     }
 }
 //==========================================================================================================================
+
+$.AdminBSB.panel = {
+    settingModal: function(settingId = null){
+        $('#setting_modal').modal('show');
+
+        $.ajax({
+            url: '/modal/settings/' + settingId + '/edit',
+            success: function(d) {
+
+
+                $('.modal-body').prepend($(d).fadeIn('slow'))
+                $('.modal-loader').fadeOut('fast');
+
+
+
+
+
+            },
+            error: function(e) {
+                console.log(e)
+            }
+        })
+
+        $('#setting_modal').on('hidden.bs.modal', function() {
+
+            var loader = '<div class="modal-loader"><div class="loader"><div class="preloader"><div class="spinner-layer pl-white"><div class="circle-clipper left"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div><br /><p>Please wait...</p></div></div>';
+
+            $('#setting_modal .modal-body').html(loader);
+        })
+    }
+}
+
+//===================================
+var originalSerializeArray = $.fn.serializeArray;
+$.fn.extend({
+    serializeArray: function () {
+        var brokenSerialization = originalSerializeArray.apply(this);
+        var checkboxValues = $(this).find('input[type=checkbox]').map(function () {
+            return { 'name': this.name, 'value': +this.checked };
+        }).get();
+        var checkboxKeys = $.map(checkboxValues, function (element) { return element.name; });
+        var withoutCheckboxes = $.grep(brokenSerialization, function (element) {
+            return $.inArray(element.name, checkboxKeys) == -1;
+        });
+
+        return $.merge(withoutCheckboxes, checkboxValues);
+    }
+});
+
+//===================================
 
 $(function () {
     $.AdminBSB.browser.activate();

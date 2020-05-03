@@ -1,7 +1,8 @@
 {
-    "name": "Reseller Module",
+    "title": "Reseller Module",
+    "name": "ResellerModule",
     "alias": "resellermodule",
-    "description": "",
+    "description": "This module adds the reseller functionality to the panel.",
     "keywords": [],
     "order": 0,
     "providers": [

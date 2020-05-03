@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
-use App\Services\PluginManager;
+use Module;
 use Illuminate\Support\ServiceProvider;
+use Nwidart\Modules\Module as BaseModule;
+
+//use Nwidart\Modules\Module;
 
 class PluginManagerServiceProvider extends ServiceProvider
 {
@@ -14,10 +17,6 @@ class PluginManagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            'plugin-manager',
-            PluginManager::class
-        );
     }
 
     /**
@@ -27,6 +26,10 @@ class PluginManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        BaseModule::macro('getTitle', function() {
+            $attributes = json_decode($this->json(), true);
+
+            return isset($attributes['title']) ? $attributes['title'] : $attributes['name'];
+        });
     }
 }
