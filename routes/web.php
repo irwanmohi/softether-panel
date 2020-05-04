@@ -24,3 +24,10 @@ Route::group(['prefix' => 'modal'], function() {
     Route::resource('settings', SettingController::class);
 
 });
+
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
+    Route::resource('plugins', PluginController::class);
+    Route::apiResource('plugin-install', PluginInstallController::class);
+    Route::post('plugin-install/upload-plugin-file', 'PluginInstallController@uploadPluginFile')->name('plugin-install.uploadPluginFile');
+    Route::post('plugin-install/execute-installer', 'PluginInstallController@executeInstaller')->name('plugin-install.executeInstaller');
+});

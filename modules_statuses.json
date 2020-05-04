@@ -1,3 +1,5 @@
 {
-    "ResellerModule": true
+    "ResellerModule": true,
+    "Coupom": true,
+    "Coupon": true
 }

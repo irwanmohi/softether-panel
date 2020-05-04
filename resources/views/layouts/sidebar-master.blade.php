@@ -55,7 +55,10 @@
                                 </a>
                                 <ul class="ml-menu">
                                     <li>
-                                        <a href="pages/widgets/infobox/infobox-1.html">Infobox-1</a>
+                                        <a href="/admin/plugins">All Plugins</a>
+                                    </li>
+                                    <li>
+                                        <a href="/admin/plugins/create">Install New Plugin</a>
                                     </li>
                                 </ul>
                             </li>

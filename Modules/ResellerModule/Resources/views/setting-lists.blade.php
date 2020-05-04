@@ -53,17 +53,6 @@
 @endsection
 
 @section('js')
-<script>
-
-    $(document).ready(function() {
-        //Tooltip
-        $('[data-toggle="tooltip"]').tooltip();
-
-        //Popover
-        $('[data-toggle="popover"]').popover();
-    });
-
-</script>
 
 @endsection
 

@@ -31,6 +31,8 @@
     <link href="/assets/css/style.css" rel="stylesheet">
     <link href="/assets/css/themes/all-themes.css" rel="stylesheet" />
 
+    <link href="/assets/plugins/dropzone/dropzone.css" rel="stylesheet">
+
     <link rel="stylesheet" href="/assets/css/custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
     <style type="text/css" media="screen">
@@ -154,6 +156,9 @@
     <script src="/assets/plugins/raphael/raphael.min.js"></script>
     <script src="/assets/plugins/morrisjs/morris.js"></script>
 
+    <script src="/assets/plugins/jquery-steps/jquery.steps.js"></script>
+    <script src="/assets/plugins/dropzone/dropzone.js"></script>
+
     <!-- ChartJs -->
     <script src="/assets/plugins/chartjs/Chart.bundle.js"></script>
 
@@ -164,6 +169,19 @@
 
     <!-- Custom Js -->
     <script src="/assets/js/admin.js"></script>
+
+    <script>
+
+        $(document).ready(function() {
+            //Tooltip
+            $('[data-toggle="tooltip"]').tooltip();
+
+            //Popover
+            $('[data-toggle="popover"]').popover();
+        });
+
+    </script>
+
 
     @yield('js')
 </body>

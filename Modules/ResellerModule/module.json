@@ -1,5 +1,5 @@
 {
-    "title": "Reseller Module",
+    "title": "Reseller Plugin",
     "name": "ResellerModule",
     "alias": "resellermodule",
     "description": "This module adds the reseller functionality to the panel.",
