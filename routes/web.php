@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.master');
-});
+Route::get('/', DashboardController::class)->middleware('auth');
 
 Auth::routes();
 
@@ -24,6 +22,7 @@ Route::group(['prefix' => 'modal'], function() {
     Route::resource('settings', SettingController::class);
 
 });
+
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::resource('plugins', PluginController::class);

@@ -2,6 +2,8 @@
 
 namespace Modules\ResellerModule\Providers;
 
+use Alert;
+use App\Contracts\Concerns\Link;
 use MenuManager;
 use App\Contracts\SideMenu;
 use Illuminate\Support\ServiceProvider;

@@ -1,7 +1,5 @@
 <?php
 
-use App\Facades\PluginManager;
-
 return [
 
     /*
@@ -179,6 +177,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\PluginManagerServiceProvider::class,
         App\Providers\MenuServiceProvider::class,
+        App\Providers\AlertServiceProvider::class,
+        App\Providers\ConcernServiceProvider::class,
 
     ],
 
@@ -233,7 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PluginManager' => App\Facades\PluginManager::class,
         'MenuManager' => App\Facades\MenuManager::class,
-
+        'Alert' => App\Facades\Alert::class,
     ],
 
 ];
