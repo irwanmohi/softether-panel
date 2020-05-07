@@ -179,6 +179,7 @@ return [
         App\Providers\MenuServiceProvider::class,
         App\Providers\AlertServiceProvider::class,
         App\Providers\ConcernServiceProvider::class,
+        App\Providers\InfoboxServiceProvider::class,
 
     ],
 
@@ -234,6 +235,7 @@ return [
         'PluginManager' => App\Facades\PluginManager::class,
         'MenuManager' => App\Facades\MenuManager::class,
         'Alert' => App\Facades\Alert::class,
+        'Infobox' => App\Facades\Infobox::class,
     ],
 
 ];

@@ -3,9 +3,12 @@
 namespace Modules\ResellerModule\Providers;
 
 use Alert;
-use App\Contracts\Concerns\Link;
+use Infobox;
 use MenuManager;
+use App\Contracts\Concerns\Colors;
 use App\Contracts\SideMenu;
+use App\Contracts\Concerns\Link;
+use App\Contracts\Infobox as InfoboxContract;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
@@ -36,6 +39,7 @@ class ResellerModuleServiceProvider extends ServiceProvider
 
         // app level
         $this->registerMenu();
+        $this->registerBoxes();
     }
 
     /**
@@ -138,5 +142,14 @@ class ResellerModuleServiceProvider extends ServiceProvider
         foreach ($adminMenu as $menu) {
             MenuManager::adminMenu($menu);
         }
+    }
+
+    protected function registerBoxes() {
+        Infobox::addBox('plain', function(InfoboxContract $box) {
+            $box->setTitle('Total Reseller');
+            $box->setValue(30);
+            $box->setIcon('assignment_ind');
+            $box->setColor(Colors::PINK);
+        });
     }
 }
