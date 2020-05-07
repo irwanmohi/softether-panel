@@ -32,8 +32,7 @@ class Infobox {
         $this->registry = $registry;
     }
 
-    public function addBox($key, Closure $callback) {
-
+    public function addBox($key, Closure $callback, $show = true) {
 
         if( ! $this->registry->has($key) )
             throw \InvalidArgumentException(sprintf("Invalid box instance with key %s.", $key));
@@ -42,7 +41,13 @@ class Infobox {
 
         $callback($box);
 
-        $this->boxes[] = $box;
+        if ( is_callable($show) && true === $show() ) {
+            $this->boxes[] = $box;
+        }
+
+        if( is_bool($show) && true == $show ) {
+            $this->boxes[] = $box;
+        }
 
         return $this;
     }

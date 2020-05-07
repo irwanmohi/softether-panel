@@ -145,34 +145,6 @@ class ResellerModuleServiceProvider extends ServiceProvider
     }
 
     protected function registerBoxes() {
-        Infobox::addBox('plain', function(InfoboxContract $box) {
-            $box->setTitle('Total Reseller');
-            $box->setValue(30);
-            $box->setIcon('assignment_ind');
-            $box->setColor(Colors::PINK);
-        });
-
-
-        Infobox::addBox('full-color', function(InfoboxContract $box) {
-            $box->setTitle('Total Reseller');
-            $box->setValue(30);
-            $box->setIcon('assignment_ind');
-            $box->setColor(Colors::PINK);
-        });
-
-        Infobox::addBox('white', function(InfoboxContract $box) {
-            $box->setTitle('Total Reseller');
-            $box->setValue(30);
-            $box->setIcon('assignment_ind');
-            $box->setColor(Colors::PINK);
-        });
-
-
-        Infobox::addBox('dual', function(InfoboxContract $box) {
-            $box->setTitle('Total Reseller');
-            $box->setValue(30);
-            $box->setIcon('assignment_ind');
-            $box->setColor(Colors::PINK);
-        });
+        //
     }
 }
