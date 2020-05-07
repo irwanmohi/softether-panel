@@ -135,6 +135,8 @@
                     $('#btn-create-reseller').text('CREATE');
                     $('#btn-create-reseller').attr('disabled', false);
 
+                    window.livewire.emit('userUpdated');
+
                     return swal('Reseller Created!', 'Reseller has been created successfully!', 'success');
                 },
                 error: function(e) {

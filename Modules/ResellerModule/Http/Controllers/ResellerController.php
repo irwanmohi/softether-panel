@@ -64,7 +64,7 @@ class ResellerController extends Controller
                 return response()->json([
                     'errors' => [
                         'balance' => [
-                            'Your balance amount is not met the amount of transferred balance to the reseller.'
+                            'Your balance amount is not met the amount required to transfer the balance to the reseller.'
                         ]
                     ]
                 ], 422);
@@ -92,7 +92,7 @@ class ResellerController extends Controller
      */
     public function show($id)
     {
-        return view('resellermodule::show');
+        return view('resellermodule::resellers.index');
     }
 
     /**
@@ -102,7 +102,7 @@ class ResellerController extends Controller
      */
     public function edit($id)
     {
-        return view('resellermodule::edit');
+        return view('resellermodule::resellers.index');
     }
 
     /**

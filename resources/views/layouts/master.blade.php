@@ -46,26 +46,34 @@
         }
     </style>
 
+    @livewireStyles
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" integrity="sha256-iM4Yzi/zLj/IshPWMC1IluRxTtRjMqjPGd97TZ9yYpU=" crossorigin="anonymous"></script>
+
+    <script charset="utf-8">
+        Turbolinks.start();
+    </script>
+
     @yield('css')
 </head>
 
 <body class="theme-deep-purple">
     <!-- Page Loader -->
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
-            <p>Please wait...</p>
-        </div>
-    </div>
+    {{--<div class="page-loader-wrapper">--}}
+        {{--<div class="loader">--}}
+            {{--<div class="preloader">--}}
+                {{--<div class="spinner-layer pl-red">--}}
+                    {{--<div class="circle-clipper left">--}}
+                        {{--<div class="circle"></div>--}}
+                    {{--</div>--}}
+                    {{--<div class="circle-clipper right">--}}
+                        {{--<div class="circle"></div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<p>Please wait...</p>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
     <!-- #END# Page Loader -->
     <!-- Overlay For Sidebars -->
@@ -178,10 +186,14 @@
 
             //Popover
             $('[data-toggle="popover"]').popover();
+
+
+            document.addEventListener('touchstart', function(){}, {passive: false})
         });
 
     </script>
 
+    @livewireScripts
 
     @yield('js')
 </body>

@@ -43,6 +43,13 @@ class GenerateResellerInfobox
 
         if( user()->role == 'reseller' ) {
 
+            Infobox::addBox('full-color', function(InfoboxContract $box) {
+                $box->setTitle('Total Sub-Reseller');
+                $box->setColor(Colors::PINK);
+                $box->setIcon('assignment_ind');
+                $box->setValue(User::where('role', 'sub-reseller')->where('parent_id', user()->id)->count());
+            });
+
         }
     }
 }
