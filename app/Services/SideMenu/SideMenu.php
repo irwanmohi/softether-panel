@@ -3,6 +3,7 @@
 namespace App\Services\SideMenu;
 
 use App\Contracts\SideMenu as SideMenuContract;
+use App\Contracts\ToggleableSideMenu;
 
 class SideMenu implements SideMenuContract {
 
@@ -49,7 +50,7 @@ class SideMenu implements SideMenuContract {
     }
 
     public function isToggleable() : bool {
-        return (bool) $this->toggleable;
+        return (bool) $this->toggleable || $this instanceof ToggleableSideMenu;
     }
 
 }

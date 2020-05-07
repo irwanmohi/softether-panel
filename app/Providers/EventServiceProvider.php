@@ -18,6 +18,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        \App\Events\Dashboard\SidebarLoading::class => [
+            \App\Listeners\Dashboard\GenerateMenu::class
+        ],
         \App\Events\Dashboard\DashboardLoading::class => [
             \App\Listeners\Dashboard\GenerateBoxes::class
         ]

@@ -2,7 +2,9 @@
 
 namespace App\Services\SideMenu;
 
-class MenuChild {
+use App\Contracts\SideMenuChild;
+
+class MenuChild implements SideMenuChild {
 
     protected $name;
 

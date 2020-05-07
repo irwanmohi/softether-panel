@@ -1,3 +1,7 @@
+@php
+    event(new \App\Events\Dashboard\SidebarLoading);
+@endphp
+
 <section>
     <!-- Left Sidebar -->
     <aside id="leftsidebar" class="sidebar">
@@ -33,7 +37,31 @@
                         <span>Home</span>
                     </a>
                 </li>
+
                 <!-- LOAD PLUGIN SIDEBAR -->
+
+                @foreach(MenuManager::getMenu() as $menu)
+                    <li>
+
+                        <a href="{{ $menu->isToggleable() ? 'javascript:void(0);' : $menu->getUrl() }}" @if( $menu->isToggleable() ) class="menu-toggle" @endif>
+                            <i class="material-icons">{{ $menu->getIcon() }}</i>
+                            <span> {{ $menu->getName() }} </span>
+                        </a>
+
+                        @if( $menu->isToggleable() && $menu instanceof \App\Contracts\ToggleableSideMenu )
+
+                            <ul class="ml-menu">
+                                @foreach( $menu->getChilds() as $menuChild )
+                                    <li>
+                                        <a href="{{ $menuChild->getUrl() }}"> {{ $menuChild->getName() }} </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+
+                        @endif
+                    </li>
+
+                @endforeach
 
                 <!-- END PLUGIN SIDEBAR -->
 
