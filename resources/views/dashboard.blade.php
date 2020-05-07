@@ -18,17 +18,12 @@
 
 <div class="clearfix row">
 
-    {{--Admin Infoboxes--}}
+    @foreach(Infobox::getBoxes() as $box)
 
-    @if( user()->isAdmin() )
+        {!! $box->getView() !!}
 
-        @foreach(Infobox::getBoxes() as $box)
+    @endforeach
 
-            {!! $box->getView() !!}
-
-        @endforeach
-
-    @endif
 </div>
 
 
