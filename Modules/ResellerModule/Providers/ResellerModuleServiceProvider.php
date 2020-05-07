@@ -11,6 +11,8 @@ use App\Contracts\Concerns\Link;
 use App\Contracts\Infobox as InfoboxContract;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Livewire;
+use Modules\ResellerModule\Livewire\ResellerTable;
 
 class ResellerModuleServiceProvider extends ServiceProvider
 {
@@ -40,6 +42,9 @@ class ResellerModuleServiceProvider extends ServiceProvider
         // app level
         $this->registerMenu();
         $this->registerBoxes();
+
+        // livewire
+        $this->registerLivewireComponents();
     }
 
     /**
@@ -147,4 +152,10 @@ class ResellerModuleServiceProvider extends ServiceProvider
     protected function registerBoxes() {
         //
     }
+
+    protected function registerLivewireComponents()
+    {
+        Livewire::component('reseller-table', ResellerTable::class);
+    }
+
 }

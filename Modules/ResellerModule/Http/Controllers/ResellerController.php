@@ -15,23 +15,8 @@ class ResellerController extends Controller
      */
     public function index()
     {
-        $resellers = User::where('role', 'reseller')->where('id', '!=', user()->id);
 
-        if( user()->role == 'reseller' ) {
-
-            $resellers->where('parent_id', user()->id);
-
-        }
-
-        if( setting('reseller_module_allow_reseller_to_add_another_reseller')->value )  {
-
-            $resellers->orWhere('role', 'sub-reseller');
-
-        }
-
-        $resellers = $resellers->get();
-
-        return view('resellermodule::resellers.index', compact('resellers'));
+        return view('resellermodule::resellers.index');
     }
 
     /**

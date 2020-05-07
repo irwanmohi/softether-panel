@@ -80,7 +80,7 @@
 
                     <div class="clearfix text-right row">
                         <div class="col-md-12">
-                            <button class="btn bg-deep-purple p-l-50 p-r-50" type="submit" id="btn-create-reseller">CREATE</button>
+                            <button wire:click="addReseller" class="btn bg-deep-purple p-l-50 p-r-50" type="submit" id="btn-create-reseller">CREATE</button>
                         </div>
                     </div>
 
@@ -112,6 +112,8 @@
     @endif
 </div>
 
+@livewire('reseller-table', ['standalone' => false])
+
 @endsection
 
 @section('js')
@@ -136,6 +138,7 @@
                     $('#btn-create-reseller').attr('disabled', false);
 
                     window.livewire.emit('userUpdated');
+                    window.livewire.emit('resellerUpdated');
 
                     return swal('Reseller Created!', 'Reseller has been created successfully!', 'success');
                 },

@@ -44,6 +44,19 @@
             color: #fff;
             text-align: center;
         }
+
+        .swal-button--confirm {
+            background-color: #3e236e;
+        }
+
+        .swal-button:not([disabled]):hover {
+            background-color: rgba(62,35,110, .7);
+        }
+
+        .swal-content__input:focus, .swal-content__textarea:focus {
+            outline: none;
+            border-color: #3e236e;
+        }
     </style>
 
     @livewireStyles
@@ -58,22 +71,6 @@
 </head>
 
 <body class="theme-deep-purple">
-    <!-- Page Loader -->
-    {{--<div class="page-loader-wrapper">--}}
-        {{--<div class="loader">--}}
-            {{--<div class="preloader">--}}
-                {{--<div class="spinner-layer pl-red">--}}
-                    {{--<div class="circle-clipper left">--}}
-                        {{--<div class="circle"></div>--}}
-                    {{--</div>--}}
-                    {{--<div class="circle-clipper right">--}}
-                        {{--<div class="circle"></div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-            {{--<p>Please wait...</p>--}}
-        {{--</div>--}}
-    {{--</div>--}}
 
     <!-- #END# Page Loader -->
     <!-- Overlay For Sidebars -->
@@ -173,7 +170,7 @@
     <!-- Sparkline Chart Plugin Js -->
     <script src="/assets/plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
-     <script src="/assets/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Custom Js -->
     <script src="/assets/js/admin.js"></script>
@@ -194,6 +191,7 @@
     </script>
 
     @livewireScripts
+    @stack('scripts')
 
     @yield('js')
 </body>

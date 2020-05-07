@@ -29,6 +29,11 @@ class GenerateBoxes
      */
     public function handle(DashboardLoading $event)
     {
-        //
+        Infobox::addBox('dual', function(InfoboxContract $box) {
+            $box->setTitle('Balance');
+            $box->setValue(user()->balance);
+            $box->setIcon('account_balance_wallet');
+            $box->setColor(Colors::INDIGO);
+        });
     }
 }
