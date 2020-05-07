@@ -1,9 +1,15 @@
 <?php
 
 use App\Services\Infobox\{
-    PlainInfobox
+    DualInfobox,
+    FullColorInfobox,
+    PlainInfobox,
+    WhiteInfobox
 };
 
 return [
-    'plain' => PlainInfobox::class
+    'plain' => PlainInfobox::class,
+    'full-color' => FullColorInfobox::class,
+    'white' => WhiteInfobox::class,
+    'dual' => DualInfobox::class
 ];
