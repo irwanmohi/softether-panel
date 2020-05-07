@@ -12,6 +12,7 @@ class SideMenu implements SideMenuContract {
     protected $name;
     protected $url;
     protected $icon;
+    protected $isActive = false;
 
     public function setName($name) {
         $this->name = $name;
@@ -53,4 +54,14 @@ class SideMenu implements SideMenuContract {
         return (bool) $this->toggleable || $this instanceof ToggleableSideMenu;
     }
 
+    public function setActive()
+    {
+        $this->isActive = true;
+
+        return $this;
+    }
+
+    public function isActive() : bool {
+        return $this->isActive;
+    }
 }

@@ -6,7 +6,8 @@
     "keywords": [],
     "order": 0,
     "providers": [
-        "Modules\\ResellerModule\\Providers\\ResellerModuleServiceProvider"
+        "Modules\\ResellerModule\\Providers\\ResellerModuleServiceProvider",
+        "Modules\\ResellerModule\\Providers\\EventServiceProvider"
     ],
     "aliases": {},
     "files": [],

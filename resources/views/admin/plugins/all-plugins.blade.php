@@ -26,9 +26,9 @@
                             <small>Plugins Works by extending the basic functionality of the panel, below is the installed plugin.</small>
                         </h2>
                         <ul class="header-dropdown m-r--5">
-                            <button class=" btn bg-deep-purple">
+                            <a href="/admin/plugins/create" class=" btn bg-deep-purple">
                                 ADD NEW PLUGIN
-                            </button>
+                            </a>
                         </ul>
                     </div>
                     <div class="body table-responsive">

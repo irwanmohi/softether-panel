@@ -6,3 +6,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
 
 });
 
+Route::resource('resellers', ResellerController::class, ['as' => 'reseller-plugin']);
+

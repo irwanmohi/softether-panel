@@ -17,4 +17,7 @@ interface SideMenu {
 
     public function isToggleable() : bool;
 
+    public function setActive();
+    public function isActive() : bool;
+
 }

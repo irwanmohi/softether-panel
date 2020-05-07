@@ -10,7 +10,7 @@
             <div class="info-container">
                 <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{ user()->name }} </div>
                 <div class="email">{{ user()->email }}</div>
-                <div class="email">10000</div>
+                <div class="email">{{ user()->balance }}</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-right">
@@ -31,8 +31,8 @@
         <div class="menu">
             <ul class="list">
                 <li class="header">MAIN NAVIGATION</li>
-                <li class="active">
-                    <a href="index.html">
+                <li class="@if(request()->url() == url('/')) active @endif">
+                    <a href="/">
                         <i class="material-icons">home</i>
                         <span>Home</span>
                     </a>
@@ -41,7 +41,7 @@
                 <!-- LOAD PLUGIN SIDEBAR -->
 
                 @foreach(MenuManager::getMenu() as $menu)
-                    <li>
+                    <li class="@if($menu->isActive()) active @endif">
 
                         <a href="{{ $menu->isToggleable() ? 'javascript:void(0);' : $menu->getUrl() }}" @if( $menu->isToggleable() ) class="menu-toggle" @endif>
                             <i class="material-icons">{{ $menu->getIcon() }}</i>
@@ -50,10 +50,10 @@
 
                         @if( $menu->isToggleable() && $menu instanceof \App\Contracts\ToggleableSideMenu )
 
-                            <ul class="ml-menu">
+                            <ul class="ml-menu @if($menu->isActive()) active @endif">
                                 @foreach( $menu->getChilds() as $menuChild )
                                     <li>
-                                        <a href="{{ $menuChild->getUrl() }}"> {{ $menuChild->getName() }} </a>
+                                        <a href="{{ $menuChild->getUrl() }}" > {{ $menuChild->getName() }} </a>
                                     </li>
                                 @endforeach
                             </ul>
