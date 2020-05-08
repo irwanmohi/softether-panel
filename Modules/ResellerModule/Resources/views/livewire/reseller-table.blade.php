@@ -220,6 +220,10 @@
             $('#edit-reseller-modal-' + id).modal('show');
         })
 
+        window.livewire.on('resellerUpdated', function() {
+            $('[id^=edit-reseller-modal-]').modal('hide');
+        })
+
     })
 
 </script>
