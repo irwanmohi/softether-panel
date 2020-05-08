@@ -90,7 +90,7 @@ class ResellerTable extends Component
 
             ! user()->isAdmin() &&
             $reseller->parent_id === user()->id &&
-            $reseller->balance >= $amount
+            user()->balance >= $amount
         ) {
 
             $reseller->increment('balance', $amount);
@@ -102,10 +102,11 @@ class ResellerTable extends Component
             $reseller->increment('balance', $amount);
         }
 
-        $this->newBalance = $reseller->balance;
-
         $this->emit('resellerUpdated');
         $this->emit('userUpdated');
+
+        $this->newBalance = $reseller->balance;
+
 
     }
 }
