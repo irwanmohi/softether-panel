@@ -4,6 +4,7 @@ namespace Modules\ResellerModule\Providers;
 
 use Alert;
 use Infobox;
+use Livewire;
 use MenuManager;
 use App\Contracts\Concerns\Colors;
 use App\Contracts\SideMenu;
@@ -11,7 +12,7 @@ use App\Contracts\Concerns\Link;
 use App\Contracts\Infobox as InfoboxContract;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Livewire;
+use Modules\ResellerModule\Livewire\EditReseller;
 use Modules\ResellerModule\Livewire\ResellerTable;
 
 class ResellerModuleServiceProvider extends ServiceProvider
@@ -156,6 +157,7 @@ class ResellerModuleServiceProvider extends ServiceProvider
     protected function registerLivewireComponents()
     {
         Livewire::component('reseller-table', ResellerTable::class);
+        Livewire::component('edit-reseller', EditReseller::class);
     }
 
 }

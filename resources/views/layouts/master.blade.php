@@ -35,6 +35,8 @@
 
     <link rel="stylesheet" href="/assets/css/custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
+    <link href="/assets/plugins/waitme/waitMe.css" rel="stylesheet" />
+
     <style type="text/css" media="screen">
         .modal-loader {
             top: 0;
@@ -61,12 +63,6 @@
 
     @livewireStyles
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" integrity="sha256-iM4Yzi/zLj/IshPWMC1IluRxTtRjMqjPGd97TZ9yYpU=" crossorigin="anonymous"></script>
-
-    <script charset="utf-8">
-        Turbolinks.start();
-    </script>
-
     @yield('css')
 </head>
 
@@ -76,6 +72,25 @@
     <!-- Overlay For Sidebars -->
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
+
+
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-deep-purple">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p>Please wait...</p>
+        </div>
+    </div>
+    <!-- #END# Page Loader -->
 
     <!-- Top Bar -->
     <nav class="navbar">
@@ -172,6 +187,8 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <script src="/assets/plugins/waitme/waitMe.js"></script>
+
     <!-- Custom Js -->
     <script src="/assets/js/admin.js"></script>
 
@@ -184,11 +201,10 @@
             //Popover
             $('[data-toggle="popover"]').popover();
 
-
-            document.addEventListener('touchstart', function(){}, {passive: false})
         });
 
     </script>
+
 
     @livewireScripts
     @stack('scripts')

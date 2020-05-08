@@ -74,6 +74,7 @@
                                             title="Delete Reseller"
                                             data-original-title="Delete Reseller"
                                             wire:click="$emit('deleteReseller', {{ $reseller->id }})"
+                                            wire:key="delete-reseller"
                                         >
                                             <i class="material-icons">delete</i>
                                         </button>
@@ -85,8 +86,22 @@
                                             title="Add Balance"
                                             data-original-title="Add Balance"
                                             wire:click="$emit('addBalanceToReseller', {{ $reseller->id }})"
+                                            wire:key="add-balance-to-reseller"
                                         >
                                             <i class="material-icons">account_balance_wallet</i>
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            class="btn bg-blue waves-effect"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Edit Reseller Details"
+                                            data-original-title="Edit Reseller Details"
+                                            wire:click="$emit('editReseller', {{ $reseller->id }})"
+                                            wire:key="edit-reseller"
+                                        >
+                                            <i class="material-icons">mode_edit</i>
                                         </button>
                                     </td>
                                 </tr>
@@ -97,6 +112,27 @@
             </div>
         </div>
     </div>
+
+    <!-- BUILD RESELLER EDIT COMPONENTS -->
+    @foreach($resellers as $reseller)
+
+        <div  class="modal fade " id="edit-reseller-modal-{{ $reseller->id }}" tabindex="-1" role="dialog">
+            <div class="modal-dialog " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="defaultModalLabel">EDIT RESELLER</h4>
+                    </div>
+                    <div class="modal-body">
+                        <livewire:edit-reseller :reseller="$reseller" :key="$reseller->id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    @endforeach
 
 @endif
 @push('scripts')
@@ -178,6 +214,10 @@
                 }
 
             })
+        })
+
+        @this.on('editReseller', function(id) {
+            $('#edit-reseller-modal-' + id).modal('show');
         })
 
     })
