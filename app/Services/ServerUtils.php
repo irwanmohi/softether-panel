@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Contracts\Server\ServerSoftware;
+use App\Contracts\Server\Service;
 
 class ServerUtils {
 
@@ -20,6 +21,7 @@ class ServerUtils {
         "cd softether-public-init-script && chmod +x init && bash init"
     ];
 
+    protected $services = [];
 
     /**
      * Add new Software.
@@ -49,6 +51,16 @@ class ServerUtils {
 
     public function getInitScript() {
         return collect($this->initialScript)->implode("\n");
+    }
+
+    public function addService($group, Service $service) {
+        $this->services[$group][] = $service;
+    }
+
+    public function getServices($group = 'main') {
+        return isset($this->services[$group])
+                ? $this->services[$group]
+                : [];
     }
 }
 

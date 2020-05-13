@@ -16,21 +16,14 @@ class ServerDisks extends Component
 
     public $disks;
 
+    public $readyToLoad = false;
+
     protected const MONITORING_PORT = 4210;
     protected const MONITORING_PATH = 'phpsysinfo';
 
     public function mount(Server $server) {
         $this->server = $server;
 
-        $this->http = new Client([
-            'base_uri' => sprintf("http://%s:%s/%s/",
-                $server->ip,
-                self::MONITORING_PORT,
-                self::MONITORING_PATH
-            )
-        ]);
-
-        $this->getDiskDetails();
     }
 
     public function render()
@@ -38,7 +31,16 @@ class ServerDisks extends Component
         return view('livewire.server-disks');
     }
 
-    protected function getDiskDetails() {
+    public function getDiskDetails() {
+
+
+        $this->http = new Client([
+            'base_uri' => sprintf("http://%s:%s/%s/",
+                $this->server->ip,
+                self::MONITORING_PORT,
+                self::MONITORING_PATH
+            )
+        ]);
 
         $boxesValue = [];
 
@@ -69,5 +71,7 @@ class ServerDisks extends Component
         } catch(\Exception $e) {
             dd($e);
         }
+
+        $this->readyToLoad = true;
     }
 }

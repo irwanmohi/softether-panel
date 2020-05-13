@@ -16,21 +16,14 @@ class ServerNetwork extends Component
 
     public $networkInterfaces = [];
 
+    public $readyToLoad = false;
+
     protected const MONITORING_PORT = 4210;
     protected const MONITORING_PATH = 'phpsysinfo';
 
     public function mount(Server $server) {
         $this->server = $server;
 
-        $this->http = new Client([
-            'base_uri' => sprintf("http://%s:%s/%s/",
-                $server->ip,
-                self::MONITORING_PORT,
-                self::MONITORING_PATH
-            )
-        ]);
-
-        $this->getNetworkDetails();
     }
 
     public function render()
@@ -38,7 +31,15 @@ class ServerNetwork extends Component
         return view('livewire.server-network');
     }
 
-    protected function getNetworkDetails() {
+    public function getNetworkDetails() {
+
+        $this->http = new Client([
+            'base_uri' => sprintf("http://%s:%s/%s/",
+                $this->server->ip,
+                self::MONITORING_PORT,
+                self::MONITORING_PATH
+            )
+        ]);
 
         try {
 
@@ -62,5 +63,7 @@ class ServerNetwork extends Component
         } catch(\Exception $e) {
             dd($e);
         }
+
+        $this->readyToLoad = true;
     }
 }

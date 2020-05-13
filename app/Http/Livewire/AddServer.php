@@ -28,7 +28,7 @@ class AddServer extends Component
         $rsa->setComment('sshpanel-key-vault');
         $rsa->setPublicKeyFormat(RSA::PUBLIC_FORMAT_OPENSSH);
 
-        $keys = $rsa->createKey();
+        $keys = $rsa->createKey(2048);
 
         $server = Server::create([
             'name' => $this->serverName,

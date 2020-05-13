@@ -1,8 +1,18 @@
-<div class="clearfix row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card">
-            <div class="body table-responsive">
-            </div>
-        </div>
-    </div>
+<div class="clearfix row" wire:init="registerServices">
+
+    @if( ! $readyToLoad )
+        @livewire('server-services-loader')
+    @else
+
+        @if(empty($services))
+            <h1 class="text-center">NO SERVICE RUNNING IN THIS SERVER</h1>
+        @else
+            @foreach($services as $service)
+                {{ $service->getView() }}
+            @endforeach
+        @endif
+
+    @endif
+
+
 </div>

@@ -55,7 +55,6 @@ class ServerDetails extends Component
 
             //dd($boxesValue, $json);
         } catch(\Exception $e) {
-            dd($e);
         }
 
         $group = sprintf('server.%s', $this->server->id);

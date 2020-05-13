@@ -94,49 +94,53 @@
 @endsection
 <div class="clearfix row" wire:init="testDefer">
 
-    @if( ! $readyToLoad )
-        @livewire('server-details-loader')
-    @else
+    <div>
 
+        @if( ! $readyToLoad )
+            @livewire('server-boxes-loader')
+        @else
 
-        @foreach(Infobox::getBoxes('server.' . $server->id) as $box)
-            {{ $box->getView() }}
-        @endforeach
+            @foreach(Infobox::getBoxes('server.' . $server->id) as $box)
+                {{ $box->getView() }}
+            @endforeach
 
-        <div class="clearfix row" >
-            <div  class="col-sm-12">
-                <div class="col-xs-2">
-                    <!-- required for floating -->
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs tabs-left">
-                        <li class="active"><a href="#services" data-toggle="tab">Services</a></li>
-                        <li><a href="#disks" data-toggle="tab">Disks</a></li>
-                        <li><a href="#networks" data-toggle="tab">Networks</a></li>
-                        <li><a href="#power" data-toggle="tab">Power</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-10">
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="services">
-                            services
-                        </div>
-                        <div class="tab-pane" id="disks">
-                            @livewire('server-disks', ['server' => $server])
-                        </div>
-                        <div class="tab-pane" id="networks">
-                            @livewire('server-network', ['server' => $server])
-                        </div>
-                        <div class="tab-pane" id="power">
-                            power
-                        </div>
+        @endif
+
+    </div>
+
+    <div class="clearfix row" >
+        <div  class="col-sm-12">
+            <div class="col-xs-2">
+                <!-- required for floating -->
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs tabs-left">
+                    <li class="active"><a href="#services" data-toggle="tab">Summary</a></li>
+                    <li><a href="#disks" data-toggle="tab">Disks</a></li>
+                    <li><a href="#networks" data-toggle="tab">Network</a></li>
+                    <li><a href="#power" data-toggle="tab">Power</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-10">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="services">
+                        @livewire('server-general-info', ['server' => $server])
+                    </div>
+                    <div class="tab-pane" id="disks">
+                        @livewire('server-disks', ['server' => $server])
+                    </div>
+                    <div class="tab-pane" id="networks">
+                        @livewire('server-network', ['server' => $server])
+                    </div>
+                    <div class="tab-pane" id="power">
+                        @livewire('server-power', ['server' => $server])
                     </div>
                 </div>
-                <div class="clearfix"></div>
             </div>
+            <div class="clearfix"></div>
         </div>
+    </div>
 
-    @endif
 
 
 </div>
