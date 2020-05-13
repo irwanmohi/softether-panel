@@ -1,0 +1,13 @@
+{
+    "name": "Softether",
+    "alias": "softether",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Softether\\Providers\\SoftetherServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

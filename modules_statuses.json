@@ -1,5 +1,6 @@
 {
     "ResellerModule": true,
     "Coupom": true,
-    "Coupon": false
+    "Coupon": false,
+    "Softether": true
 }

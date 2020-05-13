@@ -32,21 +32,23 @@ class Infobox {
         $this->registry = $registry;
     }
 
-    public function addBox($key, Closure $callback, $show = true) {
+    public function addBox($key, Closure $callback, $show = true, $group = 'main') {
 
         if( ! $this->registry->has($key) )
             throw \InvalidArgumentException(sprintf("Invalid box instance with key %s.", $key));
 
         $box = $this->registry->get($key);
 
+        $box = app(get_class($box));
+
         $callback($box);
 
         if ( is_callable($show) && true === $show() ) {
-            $this->boxes[] = $box;
+            $this->boxes[$group][] = $box;
         }
 
         if( is_bool($show) && true == $show ) {
-            $this->boxes[] = $box;
+            $this->boxes[$group][] = $box;
         }
 
         return $this;
@@ -57,7 +59,10 @@ class Infobox {
      *
      * @return array
      */
-    public function getBoxes() {
-        return $this->boxes;
+    public function getBoxes($group = 'main') {
+
+        return (isset($this->boxes[$group]))
+            ? $this->boxes[$group]
+            : [];
     }
 }

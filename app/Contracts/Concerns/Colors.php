@@ -26,7 +26,7 @@ class Colors {
         AMBER = 'amber',
         ORANGE = 'orange',
         DEEP_ORANGE = 'deep-orange',
-        BROW = 'brown',
+        BROWN = 'brown',
         GREY = 'grey',
         BLUE_GREY = 'blue-grey',
         BLACK = 'black';

@@ -180,6 +180,8 @@ return [
         App\Providers\AlertServiceProvider::class,
         App\Providers\ConcernServiceProvider::class,
         App\Providers\InfoboxServiceProvider::class,
+        App\Providers\ServerServiceProvider::class,
+        App\Providers\ByteServiceProvider::class,
 
     ],
 
@@ -236,6 +238,9 @@ return [
         'MenuManager' => App\Facades\MenuManager::class,
         'Alert' => App\Facades\Alert::class,
         'Infobox' => App\Facades\Infobox::class,
+        'ServerUtils' => App\Facades\ServerUtils::class,
+        'Byte' => App\Facades\Byte::class,
+        'Percentage' => Mattiasgeniar\Percentage\Percentage::class,
     ],
 
 ];

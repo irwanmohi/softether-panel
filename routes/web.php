@@ -24,9 +24,23 @@ Route::group(['prefix' => 'modal'], function() {
 });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function() {
     Route::resource('plugins', PluginController::class);
     Route::apiResource('plugin-install', PluginInstallController::class);
     Route::post('plugin-install/upload-plugin-file', 'PluginInstallController@uploadPluginFile')->name('plugin-install.uploadPluginFile');
     Route::post('plugin-install/execute-installer', 'PluginInstallController@executeInstaller')->name('plugin-install.executeInstaller');
+
+    Route::resource('servers', ServerController::class);
+
+    Route::group(['as' => 'servers.server_setup.', 'layout' => 'layouts.master', 'section' => 'content'], function() {
+        Route::livewire('servers/{id}/select-software', 'select-server-software')->name('select-software');
+        Route::livewire('servers/{id}/setup/{software}', 'setup-server')->name('setup-server');
+    });
+
+});
+
+Route::group(['prefix' => 'scripts', 'middleware' => 'api'], function() {
+    Route::any('installer/{id}', ServerScriptInstallerController::class)->name('scripts.installer');
+    Route::any('server-install/hooks/{payload}', ServerScriptInstallerHookController::class)->name('scripts.server-install.hooks');
+    Route::any('server-install/update/{payload}', ServerScriptInstallerUpdateController::class)->name('scripts.server-install.update');
 });

@@ -16,8 +16,11 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "livewire/livewire": "^1.0",
+        "mattiasgeniar/php-percentages": "^0.3.0",
         "nelexa/zip": "^3.3",
-        "nwidart/laravel-modules": "^7.1"
+        "nwidart/laravel-modules": "^7.1",
+        "phpseclib/phpseclib": "^2.0",
+        "scriptfusion/byte-formatter": "^3.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

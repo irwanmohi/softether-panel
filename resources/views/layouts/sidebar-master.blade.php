@@ -108,9 +108,9 @@
         </div>
         <!-- #Menu -->
         <!-- Footer -->
-        <div class="legal">
-            <div class="copyright">
-                &copy; 2018 - {{ now()->format('Y') }} <a href="https://codester.com/rizalio">{{ panel_name() }} - by SSHPANEL</a>.
+        <div class="legal bg-deep-purple">
+            <div class="copyright " >
+                &copy; 2018 - {{ now()->format('Y') }} <a style="color: #fff!important" href="https://codester.com/rizalio">{{ panel_name() }} - by SSHPANEL</a>.
             </div>
             <div class="version">
                 <b>Version: </b> 1.0

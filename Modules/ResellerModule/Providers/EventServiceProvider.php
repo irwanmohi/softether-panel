@@ -12,10 +12,10 @@ class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
         DashboardLoading::class => [
-            GenerateResellerInfobox::class
+            GenerateResellerInfobox::class,
         ],
         SidebarLoading::class => [
-            GenerateResellerSideMenu::class
+            GenerateResellerSideMenu::class,
         ]
     ];
 }

@@ -37,6 +37,10 @@
 
     <link href="/assets/plugins/waitme/waitMe.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.2/styles/dracula.min.css" integrity="sha256-67B/f3pGi//H48I9RV7Sp0x7vz1ZL6r569gFsGjlsBo=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.2/highlight.min.js" integrity="sha256-xBWd+VDTBasaTja2bfaCX4aA2H18UxRsjRFkK3rgfkI=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
     <style type="text/css" media="screen">
         .modal-loader {
             top: 0;
@@ -59,6 +63,7 @@
             outline: none;
             border-color: #3e236e;
         }
+        pre{white-space:pre-wrap}
     </style>
 
     @livewireStyles
@@ -145,7 +150,7 @@
                     </div>
 
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer bg-deep-purple">
                     <button type="button" class="btn btn-link waves-effect" onclick="$(this).parent().parent().find('button:first').prop('type', 'submit').click()">SAVE CHANGES</button>
                     <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
                 </div>

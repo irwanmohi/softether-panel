@@ -19,10 +19,12 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         \App\Events\Dashboard\SidebarLoading::class => [
-            \App\Listeners\Dashboard\GenerateMenu::class
+            \App\Listeners\Dashboard\GenerateMenu::class,
+            \App\Listeners\Server\GenerateServerMenu::class,
         ],
         \App\Events\Dashboard\DashboardLoading::class => [
-            \App\Listeners\Dashboard\GenerateBoxes::class
+            \App\Listeners\Dashboard\GenerateBoxes::class,
+            \App\Listeners\Server\GenerateServerInfobox::class,
         ]
     ];
 
