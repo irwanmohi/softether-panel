@@ -35,14 +35,23 @@
 
                     <div style="flex: 50%">
                         <h2 class="float-left">
-                            TEST SERVER <small>128.199.21.22</small>
+                            {{ \Str::upper($this->server->name) }} <small>{{ $this->server->ip }}</small>
                         </h2>
                     </div>
 
                     <div style="flex: 50%">
 
                         <div class="text-right">
-                            <span class="badge bg-green badge-lg">ONLINE</span>
+
+                            @if( $this->server->current_state == 'SETUP_COMPLETED' && $this->server->setup_completed )
+                                @if( $this->server->online_status == 'ONLINE' )
+                                    <span class="badge bg-green badge-lg">ONLINE</span>
+                                @else
+                                    <span class="badge bg-red badge-lg">OFFLINE</span>
+                                @endif
+                            @else
+                                <span class="badge bg-grey badge-lg">UNKNOWN</span>
+                            @endif
                         </div>
 
                     </div>

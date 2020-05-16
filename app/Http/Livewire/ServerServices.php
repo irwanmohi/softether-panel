@@ -41,6 +41,11 @@ class ServerServices extends Component
             $this->sshConnected = true;
         }
 
+        if( ! $this->sshConnected ) {
+            // mark server as offline
+            $this->server->update(['online_status' => 'OFFLINE']);
+        }
+
         ServerUtils::addService(
             sprintf('server.%s', $this->server->id),
             app(Service::class)
