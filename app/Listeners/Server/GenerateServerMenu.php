@@ -36,9 +36,16 @@ class GenerateServerMenu
 
         $serverGroup->addChild(
             app(SideMenuChild::class)
+                ->setName("All Servers")
+                ->setUrl(route("servers.index"))
+        );
+
+        $serverGroup->addChild(
+            app(SideMenuChild::class)
                 ->setName("Add New Server")
                 ->setUrl(route("servers.create"))
         );
+
 
         if( count(request()->segments()) >= 2 && request()->segment(2) == 'servers' ) {
             $serverGroup->setActive();

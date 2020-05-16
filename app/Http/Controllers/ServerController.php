@@ -14,7 +14,7 @@ class ServerController extends Controller
      */
     public function index()
     {
-        //
+        return view('servers.index');
     }
 
     /**
