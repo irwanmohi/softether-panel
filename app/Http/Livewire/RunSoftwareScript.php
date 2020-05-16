@@ -30,6 +30,7 @@ class RunSoftwareScript extends Component
 
     public function mount(Server $server, $softwareId) {
 
+
         if( ! in_array($server->current_state, $this->allowedState) ) abort(404);
 
         $this->server = $server;
@@ -42,6 +43,12 @@ class RunSoftwareScript extends Component
         $this->softwareId           = $softwareId;
 
         $this->software = $software;
+
+        // Trigger the beforeRun hooks.
+        if( $software instanceof ServerHook )  {
+            $software->beforeRun($server);
+        }
+
         $this->script   = $this->getInstallerScript();
     }
 

@@ -3,10 +3,12 @@
 namespace Modules\Softether\Services;
 
 use App\Server;
+use Illuminate\Support\Str;
 use App\Contracts\Server\ServerHook;
 use App\Contracts\Server\RequireServerInfo;
 use App\Contracts\Server\ServerSoftware;
 use App\Services\Server\BaseSoftware;
+use Modules\Softether\Entities\SoftetherServer;
 
 final class SoftetherSoftware extends BaseSoftware
     implements ServerSoftware, RequireServerInfo, ServerHook
@@ -39,11 +41,7 @@ EOF;
     protected $script = [
         "\n",
         "# SOFTETHER",
-        "apt-get update",
-        "apt-get install git -y",
-        "git clone https://github.com/sshpanel/softether-public-installer",
-        "cd softether-public-installer",
-        "chmod +x init && bash init"
+        "cd" // reset the cwd
     ];
 
     public function getReservedPorts(): array
@@ -57,6 +55,8 @@ EOF;
     }
 
     public function generateInstallationScript() {
+        $this->generateScript();
+
         return collect($this->script)->implode("\n");
     }
 
@@ -89,5 +89,41 @@ EOF;
 
     public function getHookUrl() {
         return $this->hookUrl;
+    }
+
+    public function beforeRun(Server $server)
+    {
+        $softetherServer = SoftetherServer::updateOrCreate(
+            ['server_id' => $server->id],
+            [
+                'psk' => encrypt(Str::random(8)),
+                'hub_password' => encrypt(Str::random(10)),
+                'admin_password' => encrypt(Str::random(10)),
+            ]
+        );
+    }
+
+    protected function generateScript() {
+
+        $softetherServer = SoftetherServer::where('server_id', $this->getServer()->id)->first();
+
+        if( $softetherServer instanceof SoftetherServer ) {
+            $variables = [
+                sprintf("export SOFTETHER_PSK=%s", decrypt($softetherServer->psk)),
+                sprintf("export SOFTETHER_ADMIN_PASSWORD=%s", decrypt($softetherServer->admin_password)),
+                sprintf("export SOFTETHER_HUB=%s", $softetherServer->hub_name),
+                sprintf("export SOFTETHER_HUB_PASSWORD=%s", decrypt($softetherServer->hub_password))
+            ];
+        }
+
+        $additional = [
+            "apt-get update",
+            "apt-get install git -y",
+            "git clone https://github.com/sshpanel/softether-public-installer",
+            "cd softether-public-installer",
+            "chmod +x init && bash init"
+        ];
+
+        $this->script = array_merge($this->script, $variables, $additional);
     }
 }
