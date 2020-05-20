@@ -1,0 +1,119 @@
+<?php
+
+namespace Modules\Softether\Jobs;
+
+use App\Server;
+use Carbon\Carbon;
+use phpseclib\Net\SSH2;
+use phpseclib\Crypt\RSA;
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Modules\Softether\Entities\SoftetherAccount;
+use Modules\Softether\Entities\SoftetherServer;
+
+class CreateSoftetherAccount implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $softetherAccount, $softetherServer, $server;
+
+    protected const DEFAULT_USERNAME = 'root';
+
+    protected const CONTAINER_NAME = 'sshpanel-softether';
+
+    protected $commands = [];
+
+    /**
+     * Create a new job instance.
+     *
+     * @return void
+     */
+    public function __construct(SoftetherServer $softetherServer, SoftetherAccount $softetherAccount)
+    {
+        $this->softetherServer  = $softetherServer;
+        $this->softetherAccount = $softetherAccount;
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        $server = $this->softetherServer->server;
+        $ssh    = new SSH2($server->ip);
+        $rsa    = new RSA();
+        $rsa->loadKey($server->private_key);
+
+        $this->server = $server;
+
+        $ssh->login(self::DEFAULT_USERNAME, $rsa);
+
+        $this->commands[] = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserCreate %s /GROUP:none /REALNAME:none /NOTE: SSHPANEL CREATED ACCOUNT',
+            self::CONTAINER_NAME,
+            $this->softetherServer->hub_name,
+            decrypt($this->softetherServer->hub_password),
+            $this->softetherAccount->username
+        );
+
+        // set the user password
+        $this->commands[] = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserPasswordSet %s /PASSWORD:%s',
+            self::CONTAINER_NAME,
+            $this->softetherServer->hub_name,
+            decrypt($this->softetherServer->hub_password),
+            $this->softetherAccount->username,
+            decrypt($this->softetherAccount->password)
+        );
+
+        // set the expiry date
+
+        $this->commands[] = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserExpiresSet %s /EXPIRES:"%s"',
+            self::CONTAINER_NAME,
+            $this->softetherServer->hub_name,
+            decrypt($this->softetherServer->hub_password),
+            $this->softetherAccount->username,
+            Carbon::parse($this->softetherAccount->expired_date)->format('Y/m/d h:i:s')
+        );
+
+        // generating certificate for user.
+        $this->commands[] = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:MakeCert /CN:%s /O:none /OU:none /C:none /ST:none /L:none /SERIAL:none /EXPIRES:none /SAVECERT:%s.crt /SAVEKEY:%s.key',
+            self::CONTAINER_NAME,
+            $this->softetherServer->hub_name,
+            decrypt($this->softetherServer->hub_password),
+            $this->softetherAccount->username,
+            sprintf("/tmp/user-cert-%s", $this->softetherAccount->username),
+            sprintf("/tmp/user-key-%s", $this->softetherAccount->username)
+        );
+
+        // assigning the cert to user.
+        $this->commands[] = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserCertSet %s /LOADCERT:%s.crt',
+            self::CONTAINER_NAME,
+            $this->softetherServer->hub_name,
+            decrypt($this->softetherServer->hub_password),
+            $this->softetherAccount->username,
+            sprintf("/tmp/user-cert-%s", $this->softetherAccount->username)
+        );
+
+        foreach($this->commands as $command) {
+            $ssh->exec($command);
+        }
+
+
+        // get the key-pair
+        $userPub = $ssh->exec(sprintf('docker exec %s cat %s', self::CONTAINER_NAME, sprintf('/tmp/user-cert-%s.crt', $this->softetherAccount->username)));
+        $userPriv  = $ssh->exec(sprintf('docker exec %s cat %s', self::CONTAINER_NAME, sprintf('/tmp/user-key-%s.key', $this->softetherAccount->username)));
+
+        //dd($userPub, $userPriv);
+
+        $this->softetherAccount->update([
+            'account_cert' => $userPub,
+            'account_key'  => $userPriv,
+            'status'       => 'ACTIVE'
+        ]);
+
+    }
+}

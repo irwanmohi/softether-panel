@@ -5,7 +5,8 @@
     "keywords": [],
     "order": 0,
     "providers": [
-        "Modules\\Softether\\Providers\\SoftetherServiceProvider"
+        "Modules\\Softether\\Providers\\SoftetherServiceProvider",
+        "Modules\\Softether\\Providers\\EventServiceProvider"
     ],
     "aliases": {},
     "files": [],

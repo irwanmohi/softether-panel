@@ -182,6 +182,7 @@ return [
         App\Providers\InfoboxServiceProvider::class,
         App\Providers\ServerServiceProvider::class,
         App\Providers\ByteServiceProvider::class,
+        App\Providers\ServerHookActionServiceProvider::class,
 
     ],
 

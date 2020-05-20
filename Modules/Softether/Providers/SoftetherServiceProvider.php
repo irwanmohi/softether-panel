@@ -2,9 +2,18 @@
 
 namespace Modules\Softether\Providers;
 
+use Livewire;
 use App\Facades\ServerUtils;
+use Modules\Softether\Http\Livewire\SelectSoftetherServer;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Softether\Http\Livewire\CreateSoftetherAccount;
+use Modules\Softether\Http\Livewire\ShowSoftetherAccountDetails;
+use Modules\Softether\Http\Livewire\SoftetherAccountSetting;
+use Modules\Softether\Http\Livewire\SoftetherDownloadCenter;
+use Modules\Softether\Http\Livewire\SoftetherHowToConnect;
+use Modules\Softether\Http\Livewire\SoftetherServerCard;
+use Modules\Softether\Services\RegisterServerCertificateHookAction;
 use Modules\Softether\Services\SoftetherSoftware;
 
 class SoftetherServiceProvider extends ServiceProvider
@@ -31,8 +40,12 @@ class SoftetherServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+        $this->registerLivewireComponents();
+        $this->registerHookActions();
 
         ServerUtils::addSoftware('softether-vpn', SoftetherSoftware::class);
+
+
     }
 
     /**
@@ -126,4 +139,20 @@ class SoftetherServiceProvider extends ServiceProvider
         }
         return $paths;
     }
+
+    protected function registerLivewireComponents() {
+        Livewire::component('select-softether-server', SelectSoftetherServer::class);
+        Livewire::component('softether-server-card', SoftetherServerCard::class);
+        Livewire::component('create-softether-account', CreateSoftetherAccount::class);
+        Livewire::component('show-softether-account-details', ShowSoftetherAccountDetails::class);
+        Livewire::component('softether-how-to-connect', SoftetherHowToConnect::class);
+        Livewire::component('softether-download-center', SoftetherDownloadCenter::class);
+        Livewire::component('softether-account-setting', SoftetherAccountSetting::class);
+    }
+
+    protected function registerHookActions() {
+        ServerUtils::registerHookAction('softether_register_server_certificate', RegisterServerCertificateHookAction::class);
+    }
 }
+
+

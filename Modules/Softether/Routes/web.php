@@ -11,6 +11,11 @@
 |
 */
 
-Route::prefix('softether')->group(function() {
+Route::prefix('softether')->as('softether.')->group(function() {
     Route::get('/', 'SoftetherController@index');
+
+    Route::resource('accounts', AccountController::class);
+    Route::get('accounts/{server}/create_account', 'AccountController@createAccount')->name('accounts.create_account');
+
+    Route::get('downloads/openvpn/{payload}', DownloadOpenvpnConfigController::class)->name('downloads.openvpn');
 });

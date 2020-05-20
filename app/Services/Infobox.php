@@ -65,4 +65,10 @@ class Infobox {
             ? $this->boxes[$group]
             : [];
     }
+
+    public function resetGroup($group = null) {
+        if( ! is_null($group) && isset($this->boxes[$group]) ) {
+            $this->boxes[$group] = [];
+        }
+    }
 }

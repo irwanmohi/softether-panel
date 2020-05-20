@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Contracts\Server\ServerSoftware;
 use App\Contracts\Server\Service;
+use App\Contracts\Server\ServerHookAction;
+use App\Contracts\Server\ServerSoftware;
 
 class ServerUtils {
 
@@ -13,6 +14,8 @@ class ServerUtils {
      * @var array $oftware
      */
     protected $software = [];
+
+    protected $hookActions = [];
 
     protected $initialScript = [
         "# INIT SCRIPT",
@@ -61,6 +64,25 @@ class ServerUtils {
         return isset($this->services[$group])
                 ? $this->services[$group]
                 : [];
+    }
+
+    public function registerHookAction($key, $hookAction, $override = false) {
+
+        if( ! $hookAction instanceof ServerHookAction) {
+            $hookAction = app($hookAction);
+        }
+
+        if(isset($this->hookActions[$key])) {
+            $this->hookActions[$key] = ($override) ? $hookAction : $this->hookActions[$key];
+        }
+        else
+        {
+            $this->hookActions[$key] = $hookAction;
+        }
+    }
+
+    public function getHookAction($key) {
+        if( isset($this->hookActions[$key]) ) return $this->hookActions[$key];
     }
 }
 

@@ -92,15 +92,16 @@
 
 </style>
 @endsection
-<div class="clearfix row" wire:init="testDefer">
+<div class="clearfix row" wire:init="loadData" >
 
-    <div>
+    <div wire:poll="refreshDetails">
 
         @if( ! $readyToLoad )
             @livewire('server-boxes-loader')
+            @livewire('server-boxes-loader')
         @else
 
-            @foreach(Infobox::getBoxes('server.' . $server->id) as $box)
+            @foreach(Infobox::getBoxes('accounts.' . $softetherAccount->softether_server_id . '.' . $softetherAccount->id) as $box)
                 {{ $box->getView() }}
             @endforeach
 
@@ -108,32 +109,29 @@
 
     </div>
 
-    <div class="clearfix row" >
+
+    <div class="clearfix row"  wire:ignore>
         <div  class="col-sm-12">
             <div class="col-xs-2">
                 <!-- required for floating -->
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tabs-left">
-                    <li class="active"><a href="#services" data-toggle="tab">Summary</a></li>
-                    <li><a href="#disks" data-toggle="tab">Disks</a></li>
-                    <li><a href="#networks" data-toggle="tab">Network</a></li>
-                    <li><a href="#power" data-toggle="tab">Power</a></li>
+                    <li class="active"><a href="#how-to-connect" data-toggle="tab">Connecting</a></li>
+                    <li><a href="#download-center" data-toggle="tab">Downloads</a></li>
+                    <li><a href="#account-setting" data-toggle="tab">Account</a></li>
                 </ul>
             </div>
             <div class="col-xs-10">
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div class="tab-pane active" id="services">
-                        @livewire('server-general-info', ['server' => $server])
+                    <div class="tab-pane active" id="how-to-connect">
+                        @livewire('softether-how-to-connect', ['softetherAccount' => $softetherAccount])
                     </div>
-                    <div class="tab-pane" id="disks">
-                        @livewire('server-disks', ['server' => $server])
+                    <div class="tab-pane" id="download-center">
+                        @livewire('softether-download-center', ['softetherAccount' => $softetherAccount])
                     </div>
-                    <div class="tab-pane" id="networks">
-                        @livewire('server-network', ['server' => $server])
-                    </div>
-                    <div class="tab-pane" id="power">
-                        @livewire('server-power', ['server' => $server])
+                    <div class="tab-pane" id="account-setting">
+                        @livewire('softether-account-setting', ['softetherAccount' => $softetherAccount])
                     </div>
                 </div>
             </div>
@@ -141,23 +139,5 @@
         </div>
     </div>
 
-
-
 </div>
-
-@push('scripts')
-<script >
-    document.addEventListener("livewire:load", function(event) {
-
-        window.livewire.hook('afterDomUpdate', () => {
-            $('[data-toggle="tooltip"]').tooltip({
-                container: 'body'
-            });
-
-
-            window.livewire.rescan()
-        });
-    });
-</script>
-@endpush
 

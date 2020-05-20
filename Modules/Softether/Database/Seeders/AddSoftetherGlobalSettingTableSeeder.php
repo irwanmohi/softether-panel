@@ -5,7 +5,7 @@ namespace Modules\Softether\Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class SoftetherDatabaseSeeder extends Seeder
+class AddSoftetherGlobalSettingTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +16,6 @@ class SoftetherDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-         $this->call(AddSoftetherGlobalSettingTableSeeder::class);
+        // $this->call("OthersTableSeeder");
     }
 }

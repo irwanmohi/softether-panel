@@ -274,7 +274,7 @@
 
         <div class="col-md-3">
             <div class="card">
-                <div class="header bg-blue">
+                <div class="header bg-{{ random_color_class() }}">
                     <h2 class="text-center">
                         <div class="preloader-default-90"></div>
                         <div class="preloader-default-50"></div>
@@ -285,19 +285,7 @@
 
         <div class="col-md-3">
             <div class="card">
-                <div class="header bg-pink">
-                    <h2 class="text-center">
-                        <div class="preloader-default-90"></div>
-                        <div class="preloader-default-50"></div>
-                    </h2>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-md-3">
-            <div class="card">
-                <div class="header bg-deep-purple">
+                <div class="header bg-{{ random_color_class() }}">
                     <h2 class="text-center">
                         <div class="preloader-default-90"></div>
                         <div class="preloader-default-50"></div>
@@ -309,7 +297,19 @@
 
         <div class="col-md-3">
             <div class="card">
-                <div class="header bg-brown">
+                <div class="header bg-{{ random_color_class() }}">
+                    <h2 class="text-center">
+                        <div class="preloader-default-90"></div>
+                        <div class="preloader-default-50"></div>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="header bg-{{ random_color_class() }}">
                     <h2 class="text-center">
                         <div class="preloader-default-90"></div>
                         <div class="preloader-default-50"></div>

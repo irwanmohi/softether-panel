@@ -27,6 +27,9 @@
 
     <link href="/assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 
+
+    <link href="/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
     <!-- Custom Css -->
     <link href="/assets/css/style.css" rel="stylesheet">
     <link href="/assets/css/themes/all-themes.css" rel="stylesheet" />

@@ -2,6 +2,7 @@
 
 namespace Modules\Softether\Entities;
 
+use App\Server;
 use Illuminate\Database\Eloquent\Model;
 
 class SoftetherServer extends Model
@@ -11,4 +12,8 @@ class SoftetherServer extends Model
         'psk', 'hub_name', 'hub_password', 'admin_password',
         'enable_vpn', 'enable_l2tp'
     ];
+
+    public function server() {
+        return $this->belongsTo(Server::class);
+    }
 }

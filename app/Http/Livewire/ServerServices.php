@@ -39,6 +39,8 @@ class ServerServices extends Component
 
         if( $ssh->login(self::DEFAULT_USERNAME, $rsa) ) {
             $this->sshConnected = true;
+
+            $this->server->update(['online_status' => 'ONLINE']);
         }
 
         if( ! $this->sshConnected ) {
