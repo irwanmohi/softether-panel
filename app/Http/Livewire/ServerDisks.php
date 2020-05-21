@@ -69,7 +69,6 @@ class ServerDisks extends Component
 
 
         } catch(\Exception $e) {
-            dd($e);
         }
 
         $this->readyToLoad = true;

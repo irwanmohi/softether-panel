@@ -102,6 +102,7 @@ class CreateSoftetherAccount extends Component
             'username'            => $this->username,
             'password'            => encrypt($this->password),
             'price'               => $this->softetherServer->account_price,
+            'auth_type'           => ($this->softetherServer->passwordless_only) ? 'CERTIFICATE' : 'PASSWORD',
             'active_date'         => Carbon::now(),
             'expired_date'        => Carbon::now()->addMonths($this->duration),
         ]);

@@ -116,22 +116,22 @@
                 <!-- required for floating -->
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs tabs-left">
-                    <li class="active"><a href="#how-to-connect" data-toggle="tab">Connecting</a></li>
+                    <li class="active"><a href="#account-setting" data-toggle="tab">Account</a></li>
                     <li><a href="#download-center" data-toggle="tab">Downloads</a></li>
-                    <li><a href="#account-setting" data-toggle="tab">Account</a></li>
+                    <li ><a href="#how-to-connect" data-toggle="tab">Connecting</a></li>
                 </ul>
             </div>
             <div class="col-xs-10">
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div class="tab-pane active" id="how-to-connect">
+                    <div class="tab-pane active" id="account-setting">
+                        @livewire('softether-account-setting', ['softetherAccount' => $softetherAccount])
+                    </div>
+                    <div class="tab-pane" id="how-to-connect">
                         @livewire('softether-how-to-connect', ['softetherAccount' => $softetherAccount])
                     </div>
                     <div class="tab-pane" id="download-center">
                         @livewire('softether-download-center', ['softetherAccount' => $softetherAccount])
-                    </div>
-                    <div class="tab-pane" id="account-setting">
-                        @livewire('softether-account-setting', ['softetherAccount' => $softetherAccount])
                     </div>
                 </div>
             </div>

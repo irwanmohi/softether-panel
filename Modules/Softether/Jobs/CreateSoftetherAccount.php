@@ -60,14 +60,6 @@ class CreateSoftetherAccount implements ShouldQueue
             $this->softetherAccount->username
         );
 
-        // set the user password
-        $this->commands[] = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserPasswordSet %s /PASSWORD:%s',
-            self::CONTAINER_NAME,
-            $this->softetherServer->hub_name,
-            decrypt($this->softetherServer->hub_password),
-            $this->softetherAccount->username,
-            decrypt($this->softetherAccount->password)
-        );
 
         // set the expiry date
 
@@ -85,17 +77,18 @@ class CreateSoftetherAccount implements ShouldQueue
             $this->softetherServer->hub_name,
             decrypt($this->softetherServer->hub_password),
             $this->softetherAccount->username,
-            sprintf("/tmp/user-cert-%s", $this->softetherAccount->username),
-            sprintf("/tmp/user-key-%s", $this->softetherAccount->username)
+            sprintf("chain_certs/user-cert-%s", $this->softetherAccount->username),
+            sprintf("chain_certs/user-key-%s", $this->softetherAccount->username)
         );
 
+        // by default using passwordless
         // assigning the cert to user.
         $this->commands[] = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserCertSet %s /LOADCERT:%s.crt',
             self::CONTAINER_NAME,
             $this->softetherServer->hub_name,
             decrypt($this->softetherServer->hub_password),
             $this->softetherAccount->username,
-            sprintf("/tmp/user-cert-%s", $this->softetherAccount->username)
+            sprintf("chain_certs/user-cert-%s", $this->softetherAccount->username)
         );
 
         foreach($this->commands as $command) {
@@ -104,8 +97,8 @@ class CreateSoftetherAccount implements ShouldQueue
 
 
         // get the key-pair
-        $userPub = $ssh->exec(sprintf('docker exec %s cat %s', self::CONTAINER_NAME, sprintf('/tmp/user-cert-%s.crt', $this->softetherAccount->username)));
-        $userPriv  = $ssh->exec(sprintf('docker exec %s cat %s', self::CONTAINER_NAME, sprintf('/tmp/user-key-%s.key', $this->softetherAccount->username)));
+        $userPub = $ssh->exec(sprintf('docker exec %s cat %s', self::CONTAINER_NAME, sprintf('chain_certs/user-cert-%s.crt', $this->softetherAccount->username)));
+        $userPriv  = $ssh->exec(sprintf('docker exec %s cat %s', self::CONTAINER_NAME, sprintf('chain_certs/user-key-%s.key', $this->softetherAccount->username)));
 
         //dd($userPub, $userPriv);
 
@@ -114,6 +107,21 @@ class CreateSoftetherAccount implements ShouldQueue
             'account_key'  => $userPriv,
             'status'       => 'ACTIVE'
         ]);
+
+        if( ! $this->softetherServer->passwordless_only ) {
+
+            // if the server forcing to use password auth
+            // set the user password
+            $passwordSet = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserPasswordSet %s /PASSWORD:%s',
+                self::CONTAINER_NAME,
+                $this->softetherServer->hub_name,
+                decrypt($this->softetherServer->hub_password),
+                $this->softetherAccount->username,
+                decrypt($this->softetherAccount->password)
+            );
+
+            $ssh->exec($passwordSet);
+        }
 
     }
 }
