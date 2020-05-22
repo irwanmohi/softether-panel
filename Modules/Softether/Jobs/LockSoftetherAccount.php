@@ -70,6 +70,8 @@ class LockSoftetherAccount implements ShouldQueue
             $this->softetherAccount->username
         );
 
+        $ssh->exec($command);
+
         $this->softetherAccount->update(['is_locked' => true]);
     }
 }
