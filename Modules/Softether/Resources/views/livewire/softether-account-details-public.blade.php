@@ -7,7 +7,7 @@
 * Copyright (c) 2014 Ä°smail Demirbilek
 * License: MIT
 */
-.tabs-left, .tabs-right {
+.nav-tabs, .tabs-right {
     border-bottom: none;
     padding-top: 2px;
 }
@@ -86,58 +86,98 @@
     border-bottom: none;
 }
 
-.tabs-left>li .active > a {
+.nav-tabs > li .active > a {
     color: #673AB7 !important;
+    background-color: transparent !important;
+
+}
+
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    color: #673AB7 !important;
+    cursor: default;
+    background-color: transparent !important;
+    border-bottom-color: transparent;
 }
 
 </style>
 @endsection
-<div class="clearfix row" wire:init="loadData" >
+<div  wire:init="loadData" >
 
-    <div wire:poll="refreshDetails">
+    <div class="row-clearfix">
 
-        @if( ! $readyToLoad )
-            @livewire('server-boxes-loader')
-            @livewire('server-boxes-loader')
-        @else
+        <div class="col-lg-12">
 
-            @foreach(Infobox::getBoxes('accounts.' . $softetherAccount->softether_server_id . '.' . $softetherAccount->id) as $box)
-                {{ $box->getView() }}
-            @endforeach
 
-        @endif
+            <div class="col-lg-12">
+
+                <div wire:poll="refreshDetails" >
+
+                    @if( ! $readyToLoad )
+                        @livewire('server-boxes-loader')
+                        @livewire('server-boxes-loader')
+                    @else
+
+                        @foreach(Infobox::getBoxes('accounts.' . $softetherAccount->softether_server_id . '.' . $softetherAccount->id) as $box)
+                            {{ $box->getView() }}
+                        @endforeach
+
+                    @endif
+
+                </div>
+
+            </div>
+
+
+        </div>
 
     </div>
 
+    <div class="clearfix row" wire:ignore>
 
-    <div class="clearfix row"  wire:ignore>
-        <div  class="col-sm-12">
-            <div class="col-xs-2">
-                <!-- required for floating -->
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs tabs-left">
-                    <li class="active"><a href="#account-setting" data-toggle="tab">Account</a></li>
-                    <li><a href="#download-center" data-toggle="tab">Downloads</a></li>
-                    <li ><a href="#sharing" data-toggle="tab">Share</a></li>
-                </ul>
+        <div class="col-lg-12">
+
+
+            <div class="col-lg-1">
             </div>
-            <div class="col-xs-10">
+
+            <div class="col-lg-10">
+
+                <ul class="nav nav-tabs">
+                    <li  class="active"><a href="#account-setting" data-toggle="tab">Account</a></li>
+                    <li><a href="#download-center" data-toggle="tab">Downloads</a></li>
+                </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div class="tab-pane active" id="account-setting">
+                    <div wire:ignore class="tab-pane active" id="account-setting">
                         @livewire('softether-account-setting', ['softetherAccount' => $softetherAccount])
                     </div>
-                    <div class="tab-pane" id="download-center">
+                    <div wire:ignore  class="tab-pane" id="download-center">
                         @livewire('softether-download-center', ['softetherAccount' => $softetherAccount])
-                    </div>
-                    <div class="tab-pane" id="sharing">
-                        @livewire('softether-how-to-connect', ['softetherAccount' => $softetherAccount])
                     </div>
                 </div>
             </div>
-            <div class="clearfix"></div>
+
+            <div class="col-lg-1">
+            </div>
+
         </div>
+
     </div>
+
+    <div class="clearfix row">
+
+        <div class="col-lg-12">
+
+            <hr>
+            <p class="text-center col-grey">Powered & Copyright by <a style="color: #673AB7;" href="https://sshpanel.io">SSHPANEL.io</a></p>
+
+        </div>
+
+    </div>
+
 
 </div>
 

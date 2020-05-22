@@ -3,6 +3,7 @@
 namespace Modules\Softether\Http\Livewire;
 
 use Str;
+use Shorter;
 use Carbon\Carbon;
 use phpseclib\Net\SSH2;
 use phpseclib\Crypt\RSA;
@@ -109,6 +110,7 @@ class CreateSoftetherAccount extends Component
 
         // create the account.
 
+
         $account = SoftetherAccount::create([
             'softether_server_id' => $this->softetherServer->id,
             'user_id'             => user()->id,
@@ -119,6 +121,12 @@ class CreateSoftetherAccount extends Component
             'active_date'         => Carbon::now(),
             'expired_date'        => Carbon::now()->addMonths($this->duration),
         ]);
+
+        $short = Shorter::create(
+            route('softether.public', [encrypt($account->id)])
+        );
+
+        $account->update(['sharing_url' => $short->short_url]);
 
         // dispatch job.
         CreateSoftetherAccountJob::dispatch(

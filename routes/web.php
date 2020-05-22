@@ -44,3 +44,5 @@ Route::group(['prefix' => 'scripts', 'middleware' => 'api'], function() {
     Route::any('server-install/hooks/{payload}', ServerScriptInstallerHookController::class)->name('scripts.server-install.hooks');
     Route::any('server-install/update/{payload}', ServerScriptInstallerUpdateController::class)->name('scripts.server-install.update');
 });
+
+Route::any('/_/{id}', ShortRedirectorController::class)->name('short');

@@ -20,3 +20,5 @@ Route::prefix('softether')->as('softether.')->group(function() {
     Route::get('downloads/openvpn/{payload}', DownloadOpenvpnConfigController::class)->name('downloads.openvpn');
     Route::get('downloads/certificate/{payload}', DownloadCertificateController::class)->name('downloads.certificate');
 });
+
+Route::get('softether/public/{payload}', SoftetherAccountDetailsPublicController::class)->name('softether.public');

@@ -4,6 +4,7 @@ namespace Modules\Softether\Providers;
 
 use Livewire;
 use App\Facades\ServerUtils;
+use Modules\Softether\Http\Livewire\SoftetherAccountDetailsPublic;
 use Modules\Softether\Http\Livewire\SoftetherAccountRow;
 use Modules\Softether\Http\Livewire\SoftetherAccountActions;
 use Modules\Softether\Http\Livewire\SoftetherAccountListLoader;
@@ -158,6 +159,7 @@ class SoftetherServiceProvider extends ServiceProvider
         Livewire::component('softether-account-actions', SoftetherAccountActions::class);
         Livewire::component('softether-account-row', SoftetherAccountRow::class);
         Livewire::component('edit-softether-account', EditSoftetherAccount::class);
+        Livewire::component('softether-account-details-public', SoftetherAccountDetailsPublic::class);
     }
 
     protected function registerHookActions() {

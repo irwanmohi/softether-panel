@@ -183,6 +183,7 @@ return [
         App\Providers\ServerServiceProvider::class,
         App\Providers\ByteServiceProvider::class,
         App\Providers\ServerHookActionServiceProvider::class,
+        App\Providers\ShorterServiceProvider::class,
 
     ],
 
@@ -242,6 +243,7 @@ return [
         'ServerUtils' => App\Facades\ServerUtils::class,
         'Byte' => App\Facades\Byte::class,
         'Percentage' => Mattiasgeniar\Percentage\Percentage::class,
+        'Shorter' => App\Facades\Shorter::class,
     ],
 
 ];

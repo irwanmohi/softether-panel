@@ -13,7 +13,8 @@ class SoftetherAccount extends Model
         'outgoing_unicast_size', 'outgoing_broadcast_packets',
         'outgoing_broadcast_size', 'incoming_unicast_packets',
         'incoming_unicast_size', 'incoming_broadcast_packets',
-        'incoming_broadcast_size', 'total_logins', 'softether_server_id'
+        'incoming_broadcast_size', 'total_logins', 'softether_server_id',
+        'allow_sharing', 'sharing_url'
     ];
 
     protected $dates = [
