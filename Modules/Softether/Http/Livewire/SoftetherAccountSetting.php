@@ -24,12 +24,16 @@ class SoftetherAccountSetting extends Component
 
     public $passwordLess = false;
 
+    protected $listeners = [
+        'AccountUpdated' => '$refresh'
+    ];
+
     public function mount(SoftetherAccount $softetherAccount) {
         $this->softetherAccount = $softetherAccount;
         $this->username         = $softetherAccount->username;
         $this->password         = decrypt($this->softetherAccount->password);
         $this->psk              = decrypt($this->softetherAccount->softetherServer->psk);
-        $this->serverAddress    = $softetherAccount->softetherServer->server->ip;
+        $this->serverAddress    = optional($softetherAccount->softetherServer->server)->ip;
         $this->passwordLess     = $softetherAccount->auth_type == 'CERTIFICATE';
     }
 
@@ -54,5 +58,6 @@ class SoftetherAccountSetting extends Component
             default:
         }
 
+        $this->emit('AccountUpdated');
     }
 }

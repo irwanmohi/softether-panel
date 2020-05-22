@@ -49,7 +49,7 @@
                                 <div class="text-right col-lg-6">
 
                                     <div >
-                                        <b>{{ $serverAddress }}</b>
+                                        <b>{{ $serverAddress ?? 'UNKNOWN' }}</b>
                                     </div>
 
                                 </div>

@@ -1,10 +1,10 @@
 {
-    "name": "nwidart/softether",
+    "name": "sshpanel/softether",
     "description": "",
     "authors": [
         {
-            "name": "Nicolas Widart",
-            "email": "n.widart@gmail.com"
+            "name": "SSHPANEL SOFTETHER PLUGIN",
+            "email": "dev@sshpanel.io"
         }
     ],
     "extra": {

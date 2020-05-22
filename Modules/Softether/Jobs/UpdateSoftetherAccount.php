@@ -13,7 +13,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Modules\Softether\Entities\SoftetherAccount;
 
-class ChangeSoftetherAccountPasswordlessAuthentication implements ShouldQueue
+class UpdateSoftetherAccount implements ShouldQueue
 {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -46,11 +46,7 @@ class ChangeSoftetherAccountPasswordlessAuthentication implements ShouldQueue
     {
         $server = $this->softetherServer->server;
 
-        if( ! $server instanceof Server ) {
-            $this->softetherAccount->update(['status' => 'INACTIVE']);
-
-            return;
-        }
+        if( ! $server instanceof Server ) return;
 
         $ssh    = new SSH2($server->ip);
         $rsa    = new RSA();
@@ -68,20 +64,34 @@ class ChangeSoftetherAccountPasswordlessAuthentication implements ShouldQueue
             $server->update(['online_status' => 'ONLINE']);
         }
 
-        $this->softetherAccount->update([
-            'auth_type' => 'CERTIFICATE'
-        ]);
+        // TODO:
+        // Rename existing user certificate matching the new username
+        // Re-assign the certificate to the new username
+        // Change auth type based on the user current auth type.
 
-        // if the server forcing to use password auth
-        // set the user password
-        $certSet = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserCertSet %s /LOADCERT:%s.crt',
+        // change the auth type
+        if( $this->softetherAccount->auth_type == 'PASSWORD' ) {
+
+            $this->commands[] = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserPasswordSet %s /PASSWORD:%s',
+                self::CONTAINER_NAME,
+                $this->softetherServer->hub_name,
+                decrypt($this->softetherServer->hub_password),
+                $this->softetherAccount->username,
+                decrypt($this->softetherAccount->password)
+            );
+
+        }
+
+        $this->commands[] = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserExpiresSet %s /EXPIRES:"%s"',
             self::CONTAINER_NAME,
             $this->softetherServer->hub_name,
             decrypt($this->softetherServer->hub_password),
             $this->softetherAccount->username,
-            sprintf("chain_certs/user-cert-%s", $this->softetherAccount->username) // assuming the certs is configured by CreateSoftetherAccount
+            Carbon::parse($this->softetherAccount->expired_date)->format('Y/m/d h:i:s')
         );
 
-        $ssh->exec($certSet);
+        foreach($this->commands as $command) {
+            $ssh->exec($command);
+        }
     }
 }

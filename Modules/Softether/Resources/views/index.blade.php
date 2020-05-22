@@ -1,9 +1,6 @@
-@extends('softether::layouts.master')
-
+@extends('layouts.master')
+@section('title', 'VPN Accounts')
+@section('page_title', 'VPN ACCOUNTS')
 @section('content')
-    <h1>Hello World</h1>
-
-    <p>
-        This view is loaded from module: {!! config('softether.name') !!}
-    </p>
+    @livewire('softether-account-list', ['user' => user()->getValue()])
 @endsection

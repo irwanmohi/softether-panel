@@ -23,6 +23,8 @@ class CreateSoftetherAccount extends Component
 
     public $accountPrice = 0;
 
+    public $redirectUrl;
+
     protected $server;
 
     protected $commands = [];
@@ -69,7 +71,9 @@ class CreateSoftetherAccount extends Component
 
         $account = $this->createAccount();
 
-        $this->emit('SoftetherAccountCreated', ['account' => $account, 'redirect' => route('softether.accounts.show', [encrypt($account->id)])]);
+        $this->redirectUrl = route('softether.accounts.show', [encrypt($account->id)]);
+
+        $this->emit('SoftetherAccountCreated', ['account' => $account, 'redirect' => $this->redirectUrl]);
     }
 
     public function updatedDuration() {
@@ -92,6 +96,14 @@ class CreateSoftetherAccount extends Component
         }
         else
         {
+            // deduct balance.
+
+            if( ! user()->isAdmin() ) {
+                user()->decrement('balance', $this->accountPrice);
+
+                $this->emit('userUpdated');
+            }
+
             $this->server->update(['online_status' => 'ONLINE']);
         }
 
@@ -99,6 +111,7 @@ class CreateSoftetherAccount extends Component
 
         $account = SoftetherAccount::create([
             'softether_server_id' => $this->softetherServer->id,
+            'user_id'             => user()->id,
             'username'            => $this->username,
             'password'            => encrypt($this->password),
             'price'               => $this->softetherServer->account_price,

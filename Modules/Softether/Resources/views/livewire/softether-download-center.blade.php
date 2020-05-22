@@ -28,7 +28,7 @@
                             You can use this OpenVPN configuration file to connect to the VPN server using your favourite openvpn client.
 
                             <hr>
-                            <button wire:click="downloadOpenvpnConfig" style="width: 100%" class="btn bg-deep-purple"> <span>DOWNLOAD .OVPN FILE &nbsp; </span> <i class="material-icons">file_download</i> </button>
+                            <button @if( in_array($softetherAccount->status, ['INACTIVE', 'CREATING', 'EXPIRED', 'FAILED']) ) disabled @endif wire:click="downloadOpenvpnConfig" style="width: 100%" class="btn bg-deep-purple"> <span>DOWNLOAD .OVPN FILE &nbsp; </span> <i class="material-icons">file_download</i> </button>
                         </div>
 
                         <div class="col-lg-6">
@@ -36,7 +36,7 @@
                             Using key pair let you securely connect to the VPN Server with passwordless options.
 
                             <hr>
-                            <button wire:click="downloadCertificate" style="width: 100%" class="btn bg-deep-purple"> <span>DOWNLOAD CERTIFICATE &nbsp; </span> <i class="material-icons">file_download</i> </button>
+                            <button @if( in_array($softetherAccount->status, ['INACTIVE', 'CREATING', 'EXPIRED', 'FAILED']) ) disabled @endif wire:click="downloadCertificate" style="width: 100%" class="btn bg-deep-purple"> <span>DOWNLOAD CERTIFICATE &nbsp; </span> <i class="material-icons">file_download</i> </button>
                         </div>
 
                         <div class="col-lg-12">

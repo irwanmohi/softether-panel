@@ -21,7 +21,7 @@ class SoftetherDownloadCenter extends Component
 
     public function downloadOpenvpnConfig() {
         $configPayload = json_encode([
-            'REMOTE_SERVER' => $this->softetherAccount->softetherServer->server->ip,
+            'REMOTE_SERVER' => optional($this->softetherAccount->softetherServer->server)->ip,
             'AUTH_METHOD' => ($this->softetherAccount->auth_type == 'PASSWORD' ) ? 'auth-user-pass' : '',
             'SERVER_CA' => $this->softetherAccount->softetherServer->server_ca,
             'USER_CERT' => $this->softetherAccount->account_cert,

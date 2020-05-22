@@ -122,6 +122,11 @@ class ShowSoftetherAccountDetails extends Component
                     $box->setIcon('check');
                 }
 
+                if($this->softetherAccount->status == 'INACTIVE') {
+                    $box->setColor(Colors::RED);
+                    $box->setIcon('cancel');
+                }
+
                 if($this->softetherAccount->status == 'EXPIRED') {
                     $box->setColor(Colors::ORANGE);
                     $box->setIcon('timer_off');
@@ -149,6 +154,7 @@ class ShowSoftetherAccountDetails extends Component
                     $box->setIcon('timer');
                 }, true, $group);
             }
+
     }
 
     public function loadData() {

@@ -186,7 +186,9 @@
                 }
 
                 if(! parseInt(amount) ) {
-                    return swal("Please enter valid amount", "", "error")
+                    swal("Please enter valid amount", "", "error")
+
+                    throw new Error;
                 }
 
                 @this.call('addBalanceToReseller', id, parseInt(amount))

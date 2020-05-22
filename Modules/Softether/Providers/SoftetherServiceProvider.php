@@ -4,11 +4,16 @@ namespace Modules\Softether\Providers;
 
 use Livewire;
 use App\Facades\ServerUtils;
+use Modules\Softether\Http\Livewire\SoftetherAccountRow;
+use Modules\Softether\Http\Livewire\SoftetherAccountActions;
+use Modules\Softether\Http\Livewire\SoftetherAccountListLoader;
 use Modules\Softether\Http\Livewire\SelectSoftetherServer;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 use Modules\Softether\Http\Livewire\CreateSoftetherAccount;
+use Modules\Softether\Http\Livewire\EditSoftetherAccount;
 use Modules\Softether\Http\Livewire\ShowSoftetherAccountDetails;
+use Modules\Softether\Http\Livewire\SoftetherAccountList;
 use Modules\Softether\Http\Livewire\SoftetherAccountSetting;
 use Modules\Softether\Http\Livewire\SoftetherDownloadCenter;
 use Modules\Softether\Http\Livewire\SoftetherHowToConnect;
@@ -148,6 +153,11 @@ class SoftetherServiceProvider extends ServiceProvider
         Livewire::component('softether-how-to-connect', SoftetherHowToConnect::class);
         Livewire::component('softether-download-center', SoftetherDownloadCenter::class);
         Livewire::component('softether-account-setting', SoftetherAccountSetting::class);
+        Livewire::component('softether-account-list', SoftetherAccountList::class);
+        Livewire::component('softether-account-list-loader', SoftetherAccountListLoader::class);
+        Livewire::component('softether-account-actions', SoftetherAccountActions::class);
+        Livewire::component('softether-account-row', SoftetherAccountRow::class);
+        Livewire::component('edit-softether-account', EditSoftetherAccount::class);
     }
 
     protected function registerHookActions() {

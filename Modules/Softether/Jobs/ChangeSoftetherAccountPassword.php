@@ -45,6 +45,9 @@ class ChangeSoftetherAccountPassword implements ShouldQueue
     public function handle()
     {
         $server = $this->softetherServer->server;
+
+        if( ! $server instanceof Server ) return;
+
         $ssh    = new SSH2($server->ip);
         $rsa    = new RSA();
         $rsa->loadKey($server->private_key);

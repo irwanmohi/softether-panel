@@ -2,6 +2,7 @@
 
 namespace Modules\Softether\Jobs;
 
+use App\Server;
 use phpseclib\Net\SSH2;
 use phpseclib\Crypt\RSA;
 use Illuminate\Bus\Queueable;
@@ -52,6 +53,9 @@ class SynchronizeSoftetherAccountDetails implements ShouldQueue
     public function handle()
     {
         $server = $this->softetherServer->server;
+
+        if( ! $server instanceof Server ) return;
+
         $ssh    = new SSH2($server->ip);
         $rsa    = new RSA();
         $rsa->loadKey($server->private_key);

@@ -48,7 +48,7 @@ class DownloadOpenvpnConfigController extends Controller
             '',
             'NOTE:',
             'The config directory containing 2 files, "password-auth.ovpn" & "passwordless-auth.ovpn"',
-            'if you enable the Passwordless™ on the dashboard, please use the "passwordless-auth.ovpn" file.',
+            'if the Passwordless™ is enabled, use the "passwordless-auth.ovpn" file.',
             'if no, then use the regular "password-auth.ovpn" file to connect to VPN server.'
         ];
 

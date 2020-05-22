@@ -68,7 +68,10 @@ class ServerCard extends Component
                 'total' => Byte::format($rootDisk['@attributes']['Total'] ?? 0),
             ];
 
+            $this->server->update(['status' => 'ONLINE']);
+
         } catch(\Exception $e) {
+
         }
 
         $this->readyToLoad = true;

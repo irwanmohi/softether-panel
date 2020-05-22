@@ -51,6 +51,8 @@ class GenerateServerMenu
             $serverGroup->setActive();
         }
 
-        MenuManager::addMenu($serverGroup);
+        if( user()->isAdmin() ) {
+            MenuManager::addMenu($serverGroup);
+        }
     }
 }
