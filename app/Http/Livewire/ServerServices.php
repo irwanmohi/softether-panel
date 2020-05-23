@@ -37,16 +37,23 @@ class ServerServices extends Component
         $rsa = new RSA();
         $rsa->loadKey($this->server->private_key);
 
-        if( $ssh->login(self::DEFAULT_USERNAME, $rsa) ) {
-            $this->sshConnected = true;
+        try {
 
-            $this->server->update(['online_status' => 'ONLINE']);
-        }
+            if( $ssh->login(self::DEFAULT_USERNAME, $rsa) ) {
+                $this->sshConnected = true;
 
-        if( ! $this->sshConnected ) {
-            // mark server as offline
+                $this->server->update(['online_status' => 'ONLINE']);
+            }
+
+            if( ! $this->sshConnected ) {
+                // mark server as offline
+                $this->server->update(['online_status' => 'OFFLINE']);
+            }
+
+        } catch(\Exception $e) {
             $this->server->update(['online_status' => 'OFFLINE']);
         }
+
 
         ServerUtils::addService(
             sprintf('server.%s', $this->server->id),

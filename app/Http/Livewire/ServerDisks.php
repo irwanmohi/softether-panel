@@ -39,7 +39,8 @@ class ServerDisks extends Component
                 $this->server->ip,
                 self::MONITORING_PORT,
                 self::MONITORING_PATH
-            )
+            ),
+            'connect_timeout' => 5
         ]);
 
         $boxesValue = [];
