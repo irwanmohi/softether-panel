@@ -27,7 +27,7 @@
                     <i class="material-icons">lock</i>
                 </span>
                 <div class="form-line">
-                    <input wire:model="password" type="text" class="form-control" placeholder="Name" name="password" value="{{ $password }}" required>
+                    <input wire:model="password" type="text" class="form-control" placeholder="Password" name="password" value="{{ $password }}" required>
                 </div>
 
             </div>
