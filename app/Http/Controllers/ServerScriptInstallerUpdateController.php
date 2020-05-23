@@ -38,6 +38,10 @@ class ServerScriptInstallerUpdateController extends Controller
                 $server->update(['online_status' => ($request->online) ? 'ONLINE' : 'OFFLINE']);
             }
 
+            if( $request->has('completed') && is_bool($request->completed)) {
+                $server->update(['setup_completed' => ($request->completed)]);
+            }
+
             return 'SSHPANEL Ray: ' . Str::random(50);
 
         } catch(\Exception $e) {
