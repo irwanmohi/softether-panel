@@ -13,6 +13,7 @@ class SelectSoftetherServer extends Component
     public function render()
     {
         $servers = SoftetherServer::select('softether_servers.*')
+            ->where('allow_account_creation', true)
             ->join('servers', function($join) {
                 $join->on('servers.id', '=', 'softether_servers.server_id')
                      ->where('servers.online_status', 'ONLINE');

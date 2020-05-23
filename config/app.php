@@ -244,6 +244,7 @@ return [
         'Byte' => App\Facades\Byte::class,
         'Percentage' => Mattiasgeniar\Percentage\Percentage::class,
         'Shorter' => App\Facades\Shorter::class,
+        'ServerTabs' => App\Facades\ServerTabs::class,
     ],
 
 ];

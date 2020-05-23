@@ -21,13 +21,15 @@
 
     <div class="clearfix row">
         <div class="col-md-12">
-            <div class="input-group">
+            <div class="input-group form-float">
 
                 <span class="input-group-addon">
                     <i class="material-icons">lock</i>
                 </span>
-                <div class="form-line">
-                    <input wire:model="password" type="text" class="form-control" placeholder="Password" name="password" value="{{ $password }}" required>
+                <div class="form-group form-float">
+                    <div class="form-line">
+                        <input wire:model="password" type="text" class="form-control" placeholder="Password" name="password" value="{{ $password }}" required>
+                    </div>
                 </div>
 
             </div>

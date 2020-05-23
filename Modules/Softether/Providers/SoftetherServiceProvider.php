@@ -2,6 +2,8 @@
 
 namespace Modules\Softether\Providers;
 
+use App\Contracts\Server\ServerTab;
+use App\Facades\ServerTabs;
 use Livewire;
 use App\Facades\ServerUtils;
 use Modules\Softether\Http\Livewire\SoftetherAccountDetailsPublic;
@@ -11,6 +13,7 @@ use Modules\Softether\Http\Livewire\SoftetherAccountListLoader;
 use Modules\Softether\Http\Livewire\SelectSoftetherServer;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Softether\Entities\SoftetherServer;
 use Modules\Softether\Http\Livewire\CreateSoftetherAccount;
 use Modules\Softether\Http\Livewire\EditSoftetherAccount;
 use Modules\Softether\Http\Livewire\ShowSoftetherAccountDetails;
@@ -19,6 +22,7 @@ use Modules\Softether\Http\Livewire\SoftetherAccountSetting;
 use Modules\Softether\Http\Livewire\SoftetherDownloadCenter;
 use Modules\Softether\Http\Livewire\SoftetherHowToConnect;
 use Modules\Softether\Http\Livewire\SoftetherServerCard;
+use Modules\Softether\Http\Livewire\SoftetherServerSetting;
 use Modules\Softether\Services\RegisterServerCertificateHookAction;
 use Modules\Softether\Services\SoftetherSoftware;
 
@@ -48,6 +52,7 @@ class SoftetherServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
         $this->registerLivewireComponents();
         $this->registerHookActions();
+        $this->registerSoftetherServerTabsGroups();
 
         ServerUtils::addSoftware('softether-vpn', SoftetherSoftware::class);
 
@@ -160,10 +165,30 @@ class SoftetherServiceProvider extends ServiceProvider
         Livewire::component('softether-account-row', SoftetherAccountRow::class);
         Livewire::component('edit-softether-account', EditSoftetherAccount::class);
         Livewire::component('softether-account-details-public', SoftetherAccountDetailsPublic::class);
+        Livewire::component('softether-server-setting', SoftetherServerSetting::class);
     }
 
     protected function registerHookActions() {
         ServerUtils::registerHookAction('softether_register_server_certificate', RegisterServerCertificateHookAction::class);
+    }
+
+    protected function registerSoftetherServerTabsGroups() {
+        $servers = SoftetherServer::select('softether_servers.*')
+            ->join('servers', function($join) {
+                $join->on('servers.id', '=', 'softether_servers.server_id')
+                     ->where('servers.online_status', 'ONLINE');
+            })->get();
+
+        foreach ($servers as $softetherServer) {
+
+            ServerTabs::addTab(sprintf('server.%s.tabs', $softetherServer->server_id), function(ServerTab $tab) use($softetherServer) {
+                $tab->setTitle('Softether Setting');
+                $tab->setView(
+                    view('softether::server-setting', ['softetherServer' => $softetherServer])
+                );
+            });
+
+        }
     }
 }
 

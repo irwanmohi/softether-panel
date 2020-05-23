@@ -118,6 +118,9 @@
                     <li><a href="#disks" data-toggle="tab">Disks</a></li>
                     <li><a href="#networks" data-toggle="tab">Network</a></li>
                     <li><a href="#power" data-toggle="tab">Power</a></li>
+                    @foreach(ServerTabs::getTabs('server.' . $server->id . '.tabs') as $tab)
+                        <li><a href="#{{ Str::snake($tab->getTitle()) }}" data-toggle="tab">{{ $tab->getTitle() }}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col-xs-10">
@@ -135,6 +138,11 @@
                     <div class="tab-pane" id="power">
                         @livewire('server-power', ['server' => $server])
                     </div>
+                    @foreach(ServerTabs::getTabs('server.' . $server->id . '.tabs') as $tab)
+                        <div class="tab-pane" id="{{ Str::snake($tab->getTitle()) }}">
+                            {{ $tab->getView() }}
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="clearfix"></div>

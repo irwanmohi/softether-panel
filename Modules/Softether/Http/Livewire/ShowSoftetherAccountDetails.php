@@ -145,6 +145,24 @@ class ShowSoftetherAccountDetails extends Component
 
             }, true, $group);
 
+
+            Box::addBox('dual', function(Infobox $box) {
+                    $box->setTitle('ONLINE STATUS');
+                    $box->setValue($this->softetherAccount->online_status);
+
+                    if($this->softetherAccount->online_status == 'ONLINE') {
+                        $box->setColor(Colors::GREEN);
+                        $box->setIcon('check');
+                    }
+
+                    if($this->softetherAccount->online_status == 'OFFLINE') {
+                        $box->setColor(Colors::AMBER);
+                        $box->setIcon('cancel');
+                    }
+
+
+                }, true, $group);
+
             if( $this->softetherAccount->status == 'ACTIVE' ) {
 
                 Box::addBox('dual', function(Infobox $box) {
@@ -154,6 +172,7 @@ class ShowSoftetherAccountDetails extends Component
                     $box->setIcon('timer');
                 }, true, $group);
             }
+
 
     }
 

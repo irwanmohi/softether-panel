@@ -19,6 +19,7 @@
                                     <th>USERNAME</th>
                                     <th>SERVER</th>
                                     <th>STATUS</th>
+                                    <th>ONLINE STATUS</th>
                                     <th>CREATED AT</th>
                                     <th>EXPIRED ON</th>
                                     <th>ACTIONS</th>
@@ -63,6 +64,17 @@
                                                 @if($account->status == 'CREATING')
                                                     <label class="label label-info">CREATING</label>
                                                 @endif
+                                            </td>
+                                            <td>
+
+                                                @if($account->online_status == 'ONLINE')
+                                                    <label class="label label-success">ONLINE</label>
+                                                @endif
+
+                                                @if($account->online_status == 'OFFLINE')
+                                                    <label class="label label-warning">OFFLINE</label>
+                                                @endif
+
                                             </td>
                                             <td>{{ optional($account->created_at)->format('d/m/Y') }}</td>
                                             <td>{{ optional($account->expired_date)->format('d/m/Y') }}</td>
