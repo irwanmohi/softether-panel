@@ -213,18 +213,18 @@
                                 <div class="col-lg-12">
 
                                     <div class="text-right">
-                                        <button class="btn bg-deep-purple">SAVE DETAILS</button>
+                                        <button class="btn bg-deep-purple" wire:click="updateDetails">UPDATE DETAILS</button>
                                     </div>
 
                                 </div>
 
-                                <div wire:target="passwordLess" wire:loading wire:loading.class="display-block"  data-waitme_id="169" style="background: rgba(255, 255, 255, 0.7);backdrop-filter: blur(.7px);text-align:center;">
+                                <div wire:target="updateDetails" wire:loading wire:loading.class="display-block"  data-waitme_id="169" style="background: rgba(255, 255, 255, 0.7);backdrop-filter: blur(.7px);text-align:center;">
                                     <div class="waitMe_content" style="margin-top: 0px;">
                                         <div class="waitMe_progress rotation" style="">
                                             <div class="waitMe_progress_elem1" style="border-color:#663AB7"></div>
                                         </div>
                                         </br>
-                                        <div class="waitMe_text" style="color:#663AB7">Saving...</div>
+                                        <div class="waitMe_text" style="color:#663AB7">Updating...</div>
                                     </div>
                                 </div>
 

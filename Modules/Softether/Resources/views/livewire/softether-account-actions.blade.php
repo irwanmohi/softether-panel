@@ -146,26 +146,42 @@
             title: "Are you sure?",
             text: "The user will not able to connect using this account.",
             icon: "warning",
-            buttons: true,
+            button: {
+                closeModal: false
+            },
             dangerMode: true,
+            closeModal: false,
+            closeOnClickOutside: false
         })
         .then((willDelete) => {
             if (willDelete) {
 
                 @this.call('lockAccount', id)
 
-                swal({
-                    title: "Locked!",
-                    text: "VPN Account has been locked!",
-                    icon: "success",
-                });
+                return new Promise(function(resolve, reject) {
+                    @this.on('AccountUpdated', function() {
+                        resolve()
+                    })
+                })
+
             } else {
                 swal({
                     title: "Canceled",
                     text: 'VPN Account has not been locked.'
                 });
             }
-        });
+        })
+        .then((locked) => {
+            swal({
+                title: "Locked!",
+                text: "VPN Account has been locked!",
+                icon: "success",
+            });
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
 
     })
 
@@ -175,26 +191,41 @@
             title: "Are you sure?",
             text: "The user will be able to connect again using this account.",
             icon: "warning",
-            buttons: true,
+            button: {
+                closeModal: false
+            },
             dangerMode: true,
+            closeModal: false,
+            closeOnClickOutside: false
         })
         .then((willDelete) => {
             if (willDelete) {
 
                 @this.call('unlockAccount', id)
 
-                swal({
-                    title: "Unlocked!",
-                    text: "VPN Account has been unlocked!",
-                    icon: "success",
-                });
+                return new Promise(function(resolve, reject) {
+                    @this.on('AccountUpdated', function() {
+                        resolve()
+                    })
+                })
+
             } else {
                 swal({
                     title: "Canceled",
                     text: 'VPN Account has not been unlocked.'
                 });
             }
-        });
+        })
+        .then((unlocked) => {
+            swal({
+                title: "Unlocked!",
+                text: "VPN Account has been unlocked!",
+                icon: "success",
+            });
+        })
+        .catch(err => {
+            console.log(err)
+        })
 
     })
 </script>

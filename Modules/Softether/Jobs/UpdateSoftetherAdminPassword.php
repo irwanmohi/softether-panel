@@ -10,29 +10,30 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Modules\Softether\Entities\SoftetherAccount;
+use Modules\Softether\Entities\SoftetherServer;
 
-class UnlockSoftetherAccount
+class UpdateSoftetherAdminPassword implements ShouldQueue
 {
-
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $softetherAccount, $softetherServer, $server;
+    protected $softetherAccount, $softetherServer, $server, $currentPassword;
 
     protected const DEFAULT_USERNAME = 'root';
 
     protected const CONTAINER_NAME = 'sshpanel-softether';
+
+    protected $commands = [];
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(SoftetherAccount $softetherAccount)
+    public function __construct(SoftetherServer $softetherServer, $currentPassword)
     {
-        $this->softetherAccount = $softetherAccount;
-        $this->softetherServer  = $softetherAccount->softetherServer;
+        $this->softetherServer  = $softetherServer;
+        $this->currentPassword  = $currentPassword;
     }
 
     /**
@@ -62,17 +63,12 @@ class UnlockSoftetherAccount
             $server->update(['online_status' => 'ONLINE']);
         }
 
-
-        $command = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:UserPolicySet %s /NAME:Access /VALUE:yes',
+        $passwordSet = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /PASSWORD:%s /CSV /CMD:ServerPasswordSet %s ',
             self::CONTAINER_NAME,
-            $this->softetherServer->hub_name,
-            decrypt($this->softetherServer->hub_password),
-            $this->softetherAccount->username
+            $this->currentPassword,
+            decrypt($this->softetherServer->admin_password)
         );
 
-        $ssh->exec($command);
-
-        $this->softetherAccount->update(['is_locked' => false]);
+        $ssh->exec($passwordSet);
     }
 }
-

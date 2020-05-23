@@ -4,6 +4,9 @@ namespace Modules\Softether\Http\Livewire;
 
 use Livewire\Component;
 use Modules\Softether\Entities\SoftetherServer;
+use Modules\Softether\Jobs\UpdateSoftetherAdminPassword;
+use Modules\Softether\Jobs\UpdateSoftetherHubPassword;
+use Modules\Softether\Jobs\UpdateSoftetherPsk;
 
 class SoftetherServerSetting extends Component
 {
@@ -13,6 +16,8 @@ class SoftetherServerSetting extends Component
     public $serverName, $serverAddress, $hubName, $hubPassword, $adminPassword, $psk, $accountPrice, $allowAccountCreation;
 
     public $showHubPassword = false, $showAdminPassword = false;
+
+    public $currentHubPassword, $currentAdminPassword, $currentPsk;
 
     public function mount(SoftetherServer $softetherServer) {
         $this->softetherServer = $softetherServer;
@@ -26,6 +31,10 @@ class SoftetherServerSetting extends Component
         $this->psk           = decrypt($softetherServer->psk);
         $this->accountPrice  = $softetherServer->account_price;
         $this->allowAccountCreation = $softetherServer->allow_account_creation;
+
+        $this->currentHubPassword   = decrypt($softetherServer->hub_password);
+        $this->currentAdminPassword = decrypt($softetherServer->admin_password);
+        $this->currentPsk           = decrypt($softetherServer->psk);
     }
 
     public function render()
@@ -37,5 +46,29 @@ class SoftetherServerSetting extends Component
         sleep(2);
 
         $this->softetherServer->update(['allow_account_creation' => ! $this->allowAccountCreation]);
+    }
+
+    public function updateDetails() {
+
+        $this->softetherServer->update([
+            'hub_password'   => encrypt($this->hubPassword),
+            'admin_password' => encrypt($this->adminPassword),
+            'psk'            => encrypt($this->psk),
+            'account_price'  => $this->accountPrice
+        ]);
+
+
+        if($this->hubPassword != $this->currentHubPassword) {
+            UpdateSoftetherHubPassword::dispatch($this->softetherServer, $this->currentHubPassword);
+        }
+
+        if($this->adminPassword != $this->currentAdminPassword) {
+            UpdateSoftetherAdminPassword::dispatch($this->softetherServer, $this->currentAdminPassword);
+        }
+
+        if($this->psk != $this->currentPsk) {
+            UpdateSoftetherPsk::dispatch($this->softetherServer, $this->currentPsk);
+        }
+
     }
 }

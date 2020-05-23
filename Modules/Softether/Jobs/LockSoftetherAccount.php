@@ -12,7 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Modules\Softether\Entities\SoftetherAccount;
 
-class LockSoftetherAccount implements ShouldQueue
+class LockSoftetherAccount
 {
 
 
