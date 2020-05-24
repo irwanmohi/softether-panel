@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 if( ! function_exists('panel_name') ) {
 
     function panel_name() {
-        return 'SOFTETHER PANEL';
+        return setting('panel_name')->value ?? 'SOFTETHER PANEL';
     }
 
 }
