@@ -153,6 +153,18 @@ if [ $# -gt 0 ]; then
         echo "VESSEL: Initializing Vessel..."
         COMPOSER=$(which composer)
 
+        echo "INSTALLING DEPENDENCIES"
+
+        if [ -z "$COMPOSER" ]; then
+          docker run -u $UID --rm -it \
+            -v $(pwd):/opt \
+            -w /opt \
+            shippingdocker/php-composer:latest \
+            composer install
+        else
+            $COMPOSER install
+        fi
+
         echo "VESSEL: Installing Predis"
         if [ -z "$COMPOSER" ]; then
           docker run -u $UID --rm -it \

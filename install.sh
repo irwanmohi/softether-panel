@@ -19,9 +19,9 @@ function Banner()
 
 Banner
 
-mv environment .env
+cp environment .env
 
-./vessel init
+bash vessel init
 
 # Put down the images
 ./vessel down
