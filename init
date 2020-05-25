@@ -2,15 +2,13 @@
 
 set -e
 
-if [ -d "vendor" ]; then
-    php artisan migrate --seed
+if [ ! -d "vendor" ]; then
     /usr/local/bin/composer install
-else
-    /usr/local/bin/composer install
-    php artisan migrate --seed
 fi
 
+php artisan migrate --seed
 php artisan key:generate
+php artisan panel:setup
 
 
 
