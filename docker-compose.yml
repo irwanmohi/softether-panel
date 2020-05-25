@@ -49,12 +49,6 @@ services:
      - vesselredis:/data
     networks:
      - vessel
-  composer_install:
-    image: composer
-    container_name: composer_install
-    volumes:
-      - .:/app
-    command: composer install
 networks:
   vessel:
     driver: "bridge"

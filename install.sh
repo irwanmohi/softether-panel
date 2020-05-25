@@ -22,6 +22,18 @@ Banner
 mv environment .env
 
 ./vessel init
+
+# Put down the images
+./vessel down
+
+# Delete the Docker images built previously
+docker image rm vessel/app
+docker image rm vessel/node
+
+# Rebuild the images
+./vessel build
+
+# Start the sequences
 ./vessel start
 ./vessel artisan key:generate
 ./vessel artisan migrate --seed
