@@ -19,11 +19,11 @@ function Banner()
 
 Banner
 
-docker stop $(docker ps -aq)
-docker rm $(docker ps -aq)
+cp environment .env
 
-docker-compose up -d
-
-docker exec app bash init
+./vessel start
+./vessol artisan key:generate
+./vessel artisan migrate --seed
+./vessel artisan panel:setup
 
 echo "INSTALLATION COMPLETED!"
