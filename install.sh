@@ -19,10 +19,11 @@ function Banner()
 
 Banner
 
-cp environment .env
+mv environment .env
 
+./vessel init
 ./vessel start
-./vessol artisan key:generate
+./vessel artisan key:generate
 ./vessel artisan migrate --seed
 ./vessel artisan panel:setup
 
