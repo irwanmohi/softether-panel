@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+if [ -d "vendor" ]; then
+    php artisan migrate --seed
+    /usr/local/bin/composer install
+else
+    /usr/local/bin/composer install
+    php artisan migrate --seed
+fi
+
+php artisan key:generate
+
+
+

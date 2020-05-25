@@ -173,22 +173,27 @@ class SoftetherServiceProvider extends ServiceProvider
     }
 
     protected function registerSoftetherServerTabsGroups() {
-        $servers = SoftetherServer::select('softether_servers.*')
-            ->join('servers', function($join) {
-                $join->on('servers.id', '=', 'softether_servers.server_id')
-                     ->where('servers.online_status', 'ONLINE');
-            })->get();
+        try {
 
-        foreach ($servers as $softetherServer) {
+            $servers = SoftetherServer::select('softether_servers.*')
+                ->join('servers', function($join) {
+                    $join->on('servers.id', '=', 'softether_servers.server_id')
+                        ->where('servers.online_status', 'ONLINE');
+                })->get();
 
-            ServerTabs::addTab(sprintf('server.%s.tabs', $softetherServer->server_id), function(ServerTab $tab) use($softetherServer) {
-                $tab->setTitle('Softether Setting');
-                $tab->setView(
-                    view('softether::server-setting', ['softetherServer' => $softetherServer])
-                );
-            });
+            foreach ($servers as $softetherServer) {
 
-        }
+                ServerTabs::addTab(sprintf('server.%s.tabs', $softetherServer->server_id), function(ServerTab $tab) use($softetherServer) {
+                    $tab->setTitle('Softether Setting');
+                    $tab->setView(
+                        view('softether::server-setting', ['softetherServer' => $softetherServer])
+                    );
+                });
+
+            }
+        } catch(
+            \Exception $d
+        ) {}
     }
 }
 
