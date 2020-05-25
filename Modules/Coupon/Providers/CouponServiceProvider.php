@@ -1,32 +1,25 @@
 <?php
 
-namespace Modules\ResellerModule\Providers;
+namespace Modules\Coupon\Providers;
 
-use Alert;
-use Infobox;
 use Livewire;
-use MenuManager;
-use App\Contracts\Concerns\Colors;
-use App\Contracts\SideMenu;
-use App\Contracts\Concerns\Link;
-use App\Contracts\Infobox as InfoboxContract;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
-use Modules\ResellerModule\Livewire\EditReseller;
-use Modules\ResellerModule\Livewire\ResellerTable;
-use Modules\ResellerModule\Widgets\ResellerTableWidget;
+use Modules\Coupon\Http\Livewire\CouponGenerator;
+use Modules\Coupon\Http\Livewire\CouponRedeem;
+use Modules\Coupon\Http\Livewire\CouponTable;
 
-class ResellerModuleServiceProvider extends ServiceProvider
+class CouponServiceProvider extends ServiceProvider
 {
     /**
      * @var string $moduleName
      */
-    protected $moduleName = 'ResellerModule';
+    protected $moduleName = 'Coupon';
 
     /**
      * @var string $moduleNameLower
      */
-    protected $moduleNameLower = 'resellermodule';
+    protected $moduleNameLower = 'coupon';
 
     /**
      * Boot the application events.
@@ -40,15 +33,8 @@ class ResellerModuleServiceProvider extends ServiceProvider
         $this->registerViews();
         $this->registerFactories();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
-
-        // app level
-        $this->registerMenu();
-        $this->registerBoxes();
-
-        // livewire
         $this->registerLivewireComponents();
 
-        // widgets
         $this->registerWidgets();
     }
 
@@ -144,27 +130,13 @@ class ResellerModuleServiceProvider extends ServiceProvider
         return $paths;
     }
 
-    protected function registerMenu() {
-        $adminMenu = [
-            app(SideMenu::class)->setName('Reseller Setting')->setUrl('/admin/reseller-setting')
-        ];
-
-        foreach ($adminMenu as $menu) {
-            MenuManager::adminMenu($menu);
-        }
-    }
-
-    protected function registerBoxes() {
-        //
-    }
-
-    protected function registerLivewireComponents()
-    {
-        Livewire::component('reseller-table', ResellerTable::class);
-        Livewire::component('edit-reseller', EditReseller::class);
+    protected function registerLivewireComponents() {
+        Livewire::component('coupon-table', CouponTable::class);
+        Livewire::component('coupon-generator', CouponGenerator::class);
+        Livewire::component('coupon-redeem', CouponRedeem::class);
     }
 
     protected function registerWidgets() {
-        app('arrilot.widget-namespaces')->registerNamespace('resellermoduleWidget', '\Modules\ResellerModule\Widgets');
+        app('arrilot.widget-namespaces')->registerNamespace('couponWidget', '\Modules\Coupon\Widgets');
     }
 }

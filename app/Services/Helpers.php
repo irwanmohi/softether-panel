@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use App\Setting;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +14,11 @@ if( ! function_exists('panel_name') ) {
 
 if( ! function_exists('user') ) {
 
-    function user() {
+    function user($id = null) {
+
+        if( ! is_null($id) ) {
+            return optional(User::find($id)->first());
+        }
 
         return optional(Auth::user());
 

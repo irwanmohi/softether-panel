@@ -1,0 +1,29 @@
+{
+    "name": "sshpanel/coupon",
+    "description": "",
+    "authors": [
+        {
+            "name": "Rizal Fakhri",
+            "email": "rizal@sshpanel.io"
+        },
+        {
+            "name": "SSHPANEL",
+            "email": "contact@sshpanel.io"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Coupon\\Providers\\CouponServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Coupon\\": ""
+        }
+    }
+}

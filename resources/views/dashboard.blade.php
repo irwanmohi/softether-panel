@@ -26,5 +26,26 @@
 
 </div>
 
+<div class="clearfix row">
+
+    <div class="col-lg-12">
+
+        <hr>
+
+    </div>
+
+</div>
+
+<!-- WIDGETS -->
+
+<div class="clearfix row">
+    <div class="col-lg-12">
+        {{ Widget::group('half-size')->display() }}
+    </div>
+</div>
+
+<div class="clearfix row">
+    {{ Widget::group('full-size')->display() }}
+</div>
 
 @endsection

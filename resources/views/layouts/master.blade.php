@@ -29,6 +29,8 @@
 
 
     <link href="/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <link href="/assets/plugins/node-waves/waves.css" rel="stylesheet" />
+
 
     <!-- Custom Css -->
     <link href="/assets/css/style.css" rel="stylesheet">
@@ -196,6 +198,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="/assets/plugins/waitme/waitMe.js"></script>
+    <script src="/assets/plugins/node-waves/waves.js"></script>
 
     <!-- Custom Js -->
     <script src="/assets/js/admin.js"></script>
