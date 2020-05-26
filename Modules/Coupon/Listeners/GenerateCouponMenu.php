@@ -50,14 +50,9 @@ class GenerateCouponMenu
                 $accountGroup->addChild($child);
             }
 
-        }
-        else
-        {
-            foreach($resellerChild as $child) {
-                $accountGroup->addChild($child);
-            }
+
+            MenuManager::addMenu($accountGroup);
         }
 
-        MenuManager::addMenu($accountGroup);
     }
 }

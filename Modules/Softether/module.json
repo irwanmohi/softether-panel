@@ -1,7 +1,7 @@
 {
     "name": "Softether",
     "alias": "softether",
-    "description": "",
+    "description": "Deploy multi-protocol VPN on a single server with SoftEther!",
     "keywords": [],
     "order": 0,
     "providers": [

@@ -38,7 +38,6 @@
                                     <th>#</th>
                                     <th>PLUGIN NAME</th>
                                     <th>DESCRIPTION</th>
-                                    <th>ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,17 +46,6 @@
                                         <th scope="row">{{ $loop->index + 1 }}</th>
                                         <td>{{ $plugin->getTitle() }}</td>
                                         <td>{{ $plugin->getDescription() }}</td>
-                                        <td>
-                                            @if( $plugin->isEnabled() )
-                                                <button type="button" onclick="" class="btn btn-danger waves-effect" data-toggle="tooltip" data-placement="top" title="Disable Plugin" data-original-title="Disable Plugin">
-                                                    <i class="material-icons">do_not_disturb_alt</i>
-                                                </button>
-                                            @else
-                                                <button type="button" onclick="" class="btn btn-green waves-effect" data-toggle="tooltip" data-placement="top" title="Enable Plugin" data-original-title="Enable Plugin">
-                                                    <i class="material-icons">power_settings_new</i>
-                                                </button>
-                                            @endif
-                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

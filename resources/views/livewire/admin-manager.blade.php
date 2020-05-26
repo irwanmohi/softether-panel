@@ -78,7 +78,7 @@
                                         </button>
                                         <button
                                             type="button"
-                                            class="btn bg-green waves-effect"
+                                            class="btn btn-warning waves-effect"
                                             data-toggle="tooltip"
                                             data-placement="top"
                                             title="Revert Admin to non-Admin user"

@@ -29,7 +29,7 @@ class GenerateResellerSideMenu
     public function handle($event)
     {
         $resellerGroupMenu = app(ToggleableSideMenu::class)
-                                ->setName("Reseller")
+                                ->setName(user()->isAdmin() ? "Reseller" : "Sub-Reseller")
                                 ->setUrl('/')
                                 ->setIcon('assignment_ind');
 
@@ -38,8 +38,8 @@ class GenerateResellerSideMenu
         }
 
         $resellerMenus = [
-            app(SideMenuChild::class)->setName('All Reseller')->setUrl(route('reseller-plugin.resellers.index')),
-            app(SideMenuChild::class)->setName('Create New Reseller')->setUrl(route('reseller-plugin.resellers.create')),
+            app(SideMenuChild::class)->setName(user()->isAdmin() ? "All Reseller" : "All Sub-Reseller")->setUrl(route('reseller-plugin.resellers.index')),
+            app(SideMenuChild::class)->setName(user()->isAdmin() ? "Create New Reseller" : "Create New Sub-Reseller")->setUrl(route('reseller-plugin.resellers.create')),
         ];
 
         foreach($resellerMenus as $childMenu) {

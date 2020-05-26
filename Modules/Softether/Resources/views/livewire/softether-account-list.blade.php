@@ -29,7 +29,7 @@
                                 @if( $accounts->isEmpty() )
 
                                     <tr>
-                                        <td colspan="5" class="text-center">
+                                        <td colspan="7" class="text-center">
 
                                             <h2>NO VPN ACCOUNTS CREATED</h2>
 
