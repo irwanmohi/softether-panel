@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', DashboardController::class)->middleware('auth');
 
-Auth::routes();
+Auth::routes(['register' => false, 'reset' => false]);
 
 Route::group(['prefix' => 'modal'], function() {
 
@@ -46,3 +46,7 @@ Route::group(['prefix' => 'scripts', 'middleware' => 'api'], function() {
 });
 
 Route::any('/_/{id}', ShortRedirectorController::class)->name('short');
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('me', UserController::class)->name('me');
+});
