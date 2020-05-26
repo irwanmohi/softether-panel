@@ -18,10 +18,15 @@ function Banner()
 }
 
 Banner
+
+echo ""
+echo "--------------------------------"
 echo "PLEASE ONLY RUN THIS SCRIPT ONCE! YOUR DATA WILL BE LOST IF YOU RUN THIS SCRIPT MULTIPLE TIMES."
 echo "HIT CTRL-C NOW IF YOU WANT TO ABORT THE INSTALLATION!"
 
 sleep 10
+
+cp ENVIRONMENT .env
 
 bash vessel init
 
@@ -35,9 +40,16 @@ docker volume rm $(docker volume ls -q)
 
 ./vessel start
 
+echo "RELOADING CONFIGURATION"
+sleep 10
+
 # BUILD COMPLETED, RUN THE SETUP
 ./vessel artisan key:generate
 ./vessel artisan migrate --seed
+
+# Clearing STDOUT
+clear
+
 ./vessel artisan panel:setup
 
 echo "INSTALLATION COMPLETED!"
