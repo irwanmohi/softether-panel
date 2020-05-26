@@ -109,4 +109,11 @@ class ResellerTable extends Component
 
 
     }
+
+    public function convertToAdmin($id) {
+        $user = User::where('id', $id)->update(['parent_id' => user()->id, 'role' => 'admin']);
+
+        $this->emit('resellerUpdated');
+        $this->emit('userUpdated');
+    }
 }

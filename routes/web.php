@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
         Route::livewire('servers/{id}/setup/{software}', 'setup-server')->name('setup-server');
     });
 
+    Route::get('users', AdminController::class);
 });
 
 Route::group(['prefix' => 'scripts', 'middleware' => 'api'], function() {

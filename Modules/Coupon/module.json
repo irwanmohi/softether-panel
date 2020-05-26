@@ -1,0 +1,19 @@
+{
+    "name": "Coupon",
+    "alias": "coupon",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Coupon\\Providers\\CouponServiceProvider",
+        "Modules\\Coupon\\Providers\\EventServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "hooks": {
+        "onInstall": [
+            "Modules\\Coupon\\HookInstall"
+        ]
+    }
+}

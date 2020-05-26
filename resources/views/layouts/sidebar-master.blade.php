@@ -58,7 +58,7 @@
                         <ul class="ml-menu">
                             <li>
                                 <a href="/admin/users" >
-                                    <span>User Manager</span>
+                                    <span>Admin Manager</span>
                                 </a>
                             </li>
                             <li>

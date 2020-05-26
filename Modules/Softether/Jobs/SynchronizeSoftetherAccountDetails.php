@@ -116,7 +116,7 @@ class SynchronizeSoftetherAccountDetails implements ShouldQueue
         foreach ($csv as $str) {
             $row = str_getcsv($str);
 
-            if( count($row) >= 3 ) {
+            if( count($row) > 3 ) {
 
                 $currentUser = $row[3];
 

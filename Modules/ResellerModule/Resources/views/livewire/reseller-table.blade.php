@@ -103,6 +103,22 @@
                                         >
                                             <i class="material-icons">mode_edit</i>
                                         </button>
+
+
+                                        @if( user()->isAdmin() )
+                                            <button
+                                                type="button"
+                                                class="btn bg-green waves-effect"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Convert Reseller to Admin"
+                                                data-original-title="Convert Reseller to Admin"
+                                                wire:click="$emit('convertToAdmin', {{ $reseller->id }})"
+                                                wire:key="edit-reseller"
+                                            >
+                                                <i class="material-icons">loyalty</i>
+                                            </button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -216,6 +232,36 @@
                 }
 
             })
+        })
+
+        @this.on('convertToAdmin', function(id) {
+
+            swal({
+                title: "Are you sure?",
+                text: "This reseller will become admin and can modify all of the panel details.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                closeOnClickOutside: false
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    @this.call('convertToAdmin', id)
+
+                    swal({
+                        title: "Done!",
+                        text: "Reseller is now an admin!",
+                        icon: "success",
+                    });
+                } else {
+                    swal({
+                        title: "Canceled",
+                        text: 'Reseller has not been converted.'
+                    });
+                }
+            });
+
         })
 
         @this.on('editReseller', function(id) {
