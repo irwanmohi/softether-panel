@@ -18,12 +18,26 @@ function Banner()
 }
 
 Banner
+echo "PLEASE ONLY RUN THIS SCRIPT ONCE! YOUR DATA WILL BE LOST IF YOU RUN THIS SCRIPT MULTIPLE TIMES."
+echo "HIT CTRL-C NOW IF YOU WANT TO ABORT THE INSTALLATION!"
 
-docker stop $(docker ps -aq)
-docker rm $(docker ps -aq)
+sleep 10
 
-docker-compose up -d
+bash vessel init
 
-docker exec app bash init
+# Ensure containers are not running
+./vessel down
+
+# Delete the Docker images built previously
+docker image rm vessel/app
+docker image rm vessel/node
+docker volume rm $(docker volume ls -q)
+
+./vessel start
+
+# BUILD COMPLETED, RUN THE SETUP
+./vessel artisan key:generate
+./vessel artisan migrate --seed
+./vessel artisan panel:setup
 
 echo "INSTALLATION COMPLETED!"

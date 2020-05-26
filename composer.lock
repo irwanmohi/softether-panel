@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a09261ec14e75ef91f16a6ee6d3d30e4",
+    "content-hash": "d67d30e2a128a77477fce695cf77f3d8",
     "packages": [
         {
             "name": "arrilot/laravel-widgets",
@@ -2414,6 +2414,46 @@
             ],
             "description": "Formats byte values as human-readable strings.",
             "time": "2016-01-03T23:54:33+00:00"
+        },
+        {
+            "name": "shipping-docker/vessel",
+            "version": "5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shipping-docker/vessel.git",
+                "reference": "baf7e0481a48bd04b1bece2cdfa1a82edef64141"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shipping-docker/vessel/zipball/baf7e0481a48bd04b1bece2cdfa1a82edef64141",
+                "reference": "baf7e0481a48bd04b1bece2cdfa1a82edef64141",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Vessel\\VesselServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vessel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Fidao",
+                    "email": "fideloper@gmail.com"
+                }
+            ],
+            "description": "Simple Docker dev environments",
+            "time": "2020-01-04T12:32:35+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
