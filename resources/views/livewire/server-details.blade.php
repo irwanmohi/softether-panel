@@ -117,7 +117,6 @@
                     <li class="active"><a href="#services" data-toggle="tab">Summary</a></li>
                     <li><a href="#disks" data-toggle="tab">Disks</a></li>
                     <li><a href="#networks" data-toggle="tab">Network</a></li>
-                    <li><a href="#power" data-toggle="tab">Power</a></li>
                     @foreach(ServerTabs::getTabs('server.' . $server->id . '.tabs') as $tab)
                         <li><a href="#{{ Str::snake($tab->getTitle()) }}" data-toggle="tab">{{ $tab->getTitle() }}</a></li>
                     @endforeach
@@ -134,9 +133,6 @@
                     </div>
                     <div class="tab-pane" id="networks">
                         @livewire('server-network', ['server' => $server])
-                    </div>
-                    <div class="tab-pane" id="power">
-                        @livewire('server-power', ['server' => $server])
                     </div>
                     @foreach(ServerTabs::getTabs('server.' . $server->id . '.tabs') as $tab)
                         <div class="tab-pane" id="{{ Str::snake($tab->getTitle()) }}">
