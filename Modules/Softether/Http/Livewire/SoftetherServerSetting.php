@@ -4,6 +4,8 @@ namespace Modules\Softether\Http\Livewire;
 
 use Livewire\Component;
 use Modules\Softether\Entities\SoftetherServer;
+use Modules\Softether\Jobs\DisableL2TP;
+use Modules\Softether\Jobs\EnableL2TP;
 use Modules\Softether\Jobs\UpdateSoftetherAdminPassword;
 use Modules\Softether\Jobs\UpdateSoftetherHubPassword;
 use Modules\Softether\Jobs\UpdateSoftetherPsk;
@@ -18,6 +20,8 @@ class SoftetherServerSetting extends Component
     public $showHubPassword = false, $showAdminPassword = false;
 
     public $currentHubPassword, $currentAdminPassword, $currentPsk;
+
+    public $enableL2TP;
 
     public function mount(SoftetherServer $softetherServer) {
         $this->softetherServer = $softetherServer;
@@ -35,6 +39,8 @@ class SoftetherServerSetting extends Component
         $this->currentHubPassword   = decrypt($softetherServer->hub_password);
         $this->currentAdminPassword = decrypt($softetherServer->admin_password);
         $this->currentPsk           = decrypt($softetherServer->psk);
+
+        $this->enableL2TP = $softetherServer->enable_l2tp;
     }
 
     public function render()
@@ -46,6 +52,12 @@ class SoftetherServerSetting extends Component
         sleep(2);
 
         $this->softetherServer->update(['allow_account_creation' => ! $this->allowAccountCreation]);
+    }
+
+    public function updatingEnableL2TP() {
+        $this->softetherServer->update(['enable_l2tp' => (bool) ! $this->enableL2TP]);
+
+        ( ! $this->enableL2TP) ? EnableL2TP::dispatch($this->softetherServer) : DisableL2TP::dispatch($this->softetherServer);
     }
 
     public function updateDetails() {

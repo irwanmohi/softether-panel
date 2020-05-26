@@ -12,7 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Modules\Softether\Entities\SoftetherServer;
 
-class UpdateSoftetherHubPassword implements ShouldQueue
+class EnableL2TP implements ShouldQueue
 {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -30,10 +30,9 @@ class UpdateSoftetherHubPassword implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(SoftetherServer $softetherServer, $currentPassword)
+    public function __construct(SoftetherServer $softetherServer)
     {
         $this->softetherServer  = $softetherServer;
-        $this->currentPassword  = $currentPassword;
     }
 
     /**
@@ -63,14 +62,13 @@ class UpdateSoftetherHubPassword implements ShouldQueue
             $server->update(['online_status' => 'ONLINE']);
         }
 
-        $passwordSet = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /HUB:%s /PASSWORD:%s /CSV /CMD:SetHubPassword %s ',
+        $ipsecSet = sprintf('docker exec %s vpncmd localhost:5555 /SERVER /PASSWORD:%s /CSV /CMD:IpsecEnable /L2TP:yes /PSK:%s /DEFAULTHUB:%s  /ETHERIP:no /L2TPRAW:no',
             self::CONTAINER_NAME,
-            $this->softetherServer->hub_name,
-            $this->currentPassword,
-            decrypt($this->softetherServer->hub_password)
+            decrypt($this->softetherServer->admin_password),
+            decrypt($this->softetherServer->psk),
+            $this->softetherServer->hub_name
         );
 
-
-        $ssh->exec($passwordSet);
+        $ssh->exec($ipsecSet);
     }
 }

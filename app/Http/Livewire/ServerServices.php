@@ -62,21 +62,6 @@ class ServerServices extends Component
                 ->setStatus($this->sshConnected ? Service::STATUS_ONLINE : Service::STATUS_OFFLINE)
         );
 
-        ServerUtils::addService(
-            sprintf('server.%s', $this->server->id),
-            app(Service::class)
-                ->setName('OPENVPN')
-                ->setStatus('DISABLED')
-        );
-
-        ServerUtils::addService(
-            sprintf('server.%s', $this->server->id),
-            app(Service::class)
-                ->setName('L2TP')
-                ->setStatus('OFFLINE')
-        );
-
-
         $this->services = ServerUtils::getServices(
             sprintf('server.%s', $this->server->id)
         );

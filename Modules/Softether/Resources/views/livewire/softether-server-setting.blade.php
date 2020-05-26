@@ -150,8 +150,22 @@
                                     </div>
                                 </div>
 
+                                <div class="col-lg-9">
+                                    <div >
+                                        <b>Enable L2TP/IPSec</b>
+                                    </div>
+                                </div>
 
-                                <div wire:target="allowAccountCreation" wire:loading wire:loading.class="display-block"  data-waitme_id="170" style="background: rgba(255, 255, 255, 0.7);backdrop-filter: blur(.7px);text-align:center;">
+                                <div class="text-right col-lg-3">
+                                    <div>
+                                        <div class="switch">
+                                            <label><input wire:model="enableL2TP"  type="checkbox" ><span class="lever switch-col-deep-purple"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div wire:target="allowAccountCreation,enableL2TP" wire:loading wire:loading.class="display-block"  data-waitme_id="170" style="background: rgba(255, 255, 255, 0.7);backdrop-filter: blur(.7px);text-align:center;">
                                     <div class="waitMe_content" style="margin-top: 0 auto;">
                                         <div class="waitMe_progress rotation" style="">
                                             <div class="waitMe_progress_elem1" style="border-color:#663AB7"></div>

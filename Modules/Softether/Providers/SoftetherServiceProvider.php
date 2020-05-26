@@ -2,10 +2,11 @@
 
 namespace Modules\Softether\Providers;
 
-use App\Contracts\Server\ServerTab;
-use App\Facades\ServerTabs;
 use Livewire;
+use App\Facades\ServerTabs;
 use App\Facades\ServerUtils;
+use App\Contracts\Server\Service;
+use App\Contracts\Server\ServerTab;
 use Modules\Softether\Http\Livewire\SoftetherAccountDetailsPublic;
 use Modules\Softether\Http\Livewire\SoftetherAccountRow;
 use Modules\Softether\Http\Livewire\SoftetherAccountActions;
@@ -190,7 +191,22 @@ class SoftetherServiceProvider extends ServiceProvider
                     );
                 });
 
+                ServerUtils::addService(
+                    sprintf('server.%s', $softetherServer->server_id),
+                    app(Service::class)
+                        ->setName('OPENVPN')
+                        ->setStatus(($softetherServer->enable_vpn) ? 'ONLINE' : 'OFFLINE')
+                );
+
+                ServerUtils::addService(
+                    sprintf('server.%s', $softetherServer->server_id),
+                    app(Service::class)
+                        ->setName('L2TP')
+                        ->setStatus(($softetherServer->enable_l2tp) ? 'ONLINE' : 'OFFLINE')
+                );
+
             }
+
         } catch(
             \Exception $d
         ) {}
