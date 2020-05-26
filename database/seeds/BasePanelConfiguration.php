@@ -19,6 +19,12 @@ class BasePanelConfiguration extends Seeder
                 'key'          => 'panel_name',
                 'value'        => 'SOFTETHER PANEL',
                 'kind'         => 'string'
+            ],
+            [
+                'display_name' => 'Display SSHPANEL Support',
+                'key'          => 'display_sshpanel_support',
+                'value'        => false,
+                'kind'         => 'boolean'
             ]
         ];
 

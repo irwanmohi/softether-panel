@@ -52,6 +52,9 @@ class SetupPanel extends Command
 #     Website: https://sshpanel.io                                                 #
 #     Contact: contact@sshpanel.io                                                 #
 #                                                                                  #
+#     Support SSHPANEL.IO fight COVID-19 by displaying SSHPANEL.IO URL-            #
+#     On your Panel!                                                               #
+#                                                                                  #
 # ##################################################################################
 ');
 
@@ -68,7 +71,13 @@ class SetupPanel extends Command
         $userEmail     = $this->askEmail();
         $userPassword  = $this->secret('Password (input will be hidden) 🔐');
 
+        $supportPanel  = $this->confirm("Do you want to support us fighting for COVID-19 by displaying sshpanel.io URL on your panel? 🥺");
+
         Setting::where('key', 'panel_name')->update(['value' => $panelName]);
+
+        if( $supportPanel ) {
+            Setting::where('key', 'display_sshpanel_support')->update(['value' => true]);
+        }
 
         User::updateOrCreate(
             [
@@ -82,7 +91,15 @@ class SetupPanel extends Command
             ]
         );
 
-        $this->info(sprintf("Account created! 👌"));
+        $this->info(sprintf("Setup Success! 👌"));
+
+        if( $supportPanel ) {
+            $this->line('');
+            $this->info("Thanks for supporting us! 🎉🎉");
+            $this->info("SSHPANEL.IO will support COVID-19 by donating 20% of sales to those needed it in Malaysia & Indonesia!");
+            $this->info("Thank you for your support! 🙏");
+
+        }
     }
 
     protected function askEmail() {
