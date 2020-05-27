@@ -34,6 +34,9 @@ bash vessel init
 ./vessel down
 
 # Delete the Docker images built previously
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+docker image rm $(docker image ls -aq)
 docker image rm vessel/app
 docker image rm vessel/node
 docker volume rm $(docker volume ls -q)
