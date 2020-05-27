@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\User;
 use App\Server;
 use App\Setting;
+use App\ServerScript;
 use phpseclib\Crypt\RSA;
 use App\Facades\ServerUtils;
 use Illuminate\Console\Command;
@@ -147,6 +148,74 @@ class SetupPanel extends Command
         if( $software instanceof ServerHook )  {
             $software->beforeRun($server);
         }
+
+        $payload = encrypt(
+            json_encode([
+                'server_id'    => $server->id,
+                'software_id'  => 'softether-vpn'
+            ])
+        );
+
+        $updateUrl = route('scripts.server-install.update', [$payload]);
+        $hookUrl   = route('scripts.server-install.hooks', [$payload]);
+
+        if( $software instanceof RequireServerInfo ) {
+            $software->setServer($server);
+        }
+
+        if( $software instanceof ServerHook ) {
+            $software->setHookUrl($hookUrl);
+            $software->setUpdateUrl($updateUrl);
+        }
+
+        // generated script.
+
+        $version = sprintf("%s%s", 1.0, str_repeat(" ", (8 - strlen(1.0))));
+        $serverName = $server->name;
+        $serverIP   = $server->ip;
+        $serverPub  = $server->public_key;
+
+        $generatedScript = <<<EOL
+#!/bin/bash
+
+####################################################################################
+#   _______  _______  __   __  _______  _______  __    _  _______  ___             #
+#  |       ||       ||  | |  ||       ||   _   ||  |  | ||       ||   |            #
+#  |  _____||  _____||  |_|  ||    _  ||  |_|  ||   |_| ||    ___||   |            #
+#  | |_____ | |_____ |       ||   |_| ||       ||       ||   |___ |   |            #
+#  |_____  ||_____  ||       ||    ___||       ||  _    ||    ___||   |___         #
+#   _____| | _____| ||   _   ||   |    |   _   || | |   ||   |___ |       |        #
+#  |_______||_______||__| |__||___|    |__| |__||_|  |__||_______||_______|        #
+#                                                                                  #
+#     Installer Version: $version                                                  #
+#     Website: https://sshpanel.io                                                 #
+#     Contact: contact@sshpanel.io                                                 #
+#                                                                                  #
+# ##################################################################################
+
+
+export SSHPANEL_HOOKS="$hookUrl"
+export SSHPANEL_UPDATE="$updateUrl"
+export SERVER_PUB="$serverPub"
+export SERVER_IP="$serverIP"
+export SERVER_NAME="$serverName"
+
+
+EOL;
+
+        $generatedScript .= ServerUtils::getInitScript();
+
+        // get the software script
+        $generatedScript .= $software->generateInstallationScript();
+
+        $serverScript = ServerScript::updateOrCreate(
+            ['server_id' => $server->id],
+            [
+                'server_id' => $server->id,
+                'script'    =>  encrypt($generatedScript),
+                'fetched'   => 0
+            ]
+        );
     }
 
 }
