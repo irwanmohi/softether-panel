@@ -68,6 +68,10 @@ showVersion() {
     printf "$intro"
 }
 
+function RandomString {
+    head /dev/urandom | tr -dc _A-Za-z0-9 | head -c55
+}
+
 showHelp() {
 
     showVersion
@@ -183,11 +187,24 @@ if [ $# -gt 0 ]; then
         echo "VESSEL: Setting .env Variables"
         cp .env .env.bak.vessel
 
+        if [ ! -z "$(grep "APP_URL" .env)" ]; then
+            $SEDCMD "s/APP_URL=.*/APP_URL=$(curl ipv4.icanhazip.com)/" .env
+        else
+            echo "APP_URL=$(curl ipv4.icanhazip.com)" >> .env
+        fi
+
         if [ ! -z "$(grep "DB_HOST" .env)" ]; then
             $SEDCMD "s/DB_HOST=.*/DB_HOST=mysql/" .env
         else
             echo "DB_HOST=mysql" >> .env
         fi
+
+        if [ ! -z "$(grep "DB_PASSWORD" .env)" ]; then
+            $SEDCMD "s/DB_PASSWORD=.*/DB_PASSWORD=$(RandomString)/" .env
+        else
+            echo "DB_PASSWORD=$(RandomString)" >> .env
+        fi
+
 
         if [ ! -z "$(grep "CACHE_DRIVER" .env)" ]; then
             $SEDCMD "s/CACHE_DRIVER=.*/CACHE_DRIVER=redis/" .env
