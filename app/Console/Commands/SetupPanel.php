@@ -142,7 +142,7 @@ class SetupPanel extends Command
 
         // register server to softether software
 
-        $software = ServerUtils::getSoftware($softwareId);
+        $software = ServerUtils::getSoftware('softether-vpn');
 
         if( $software instanceof ServerHook )  {
             $software->beforeRun($server);
