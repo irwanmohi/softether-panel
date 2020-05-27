@@ -99,7 +99,8 @@ EOF;
                 'psk' => encrypt(Str::random(8)),
                 'hub_password' => encrypt(Str::random(10)),
                 'admin_password' => encrypt(Str::random(10)),
-                'passwordless_only' => false
+                'passwordless_only' => true,
+                'account_price' => 10
             ]
         );
     }
