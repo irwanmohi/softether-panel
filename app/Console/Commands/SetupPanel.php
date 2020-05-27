@@ -10,6 +10,7 @@ use phpseclib\Crypt\RSA;
 use App\Facades\ServerUtils;
 use Illuminate\Console\Command;
 use App\Contracts\Server\ServerHook;
+use App\Contracts\Server\RequireServerInfo;
 
 class SetupPanel extends Command
 {
