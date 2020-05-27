@@ -36,11 +36,9 @@ class ServerScriptInstallerController extends Controller
                 'fetched'    => $script->fetched + 1
             ]);
 
-            return '<pre>' . decrypt($script->script) . '</pre>';
+            return decrypt($script->script);
 
         } catch(\Exception $e) {
-
-            dd($e);
 
             return abort(404);
         }
