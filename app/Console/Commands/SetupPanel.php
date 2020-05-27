@@ -3,8 +3,12 @@
 namespace App\Console\Commands;
 
 use App\User;
+use App\Server;
 use App\Setting;
+use phpseclib\Crypt\RSA;
+use App\Facades\ServerUtils;
 use Illuminate\Console\Command;
+use App\Contracts\Server\ServerHook;
 
 class SetupPanel extends Command
 {
@@ -100,6 +104,8 @@ class SetupPanel extends Command
             $this->info("Thank you for your support! 🙏");
 
         }
+
+        $this->setupBaseServer();
     }
 
     protected function askEmail() {
@@ -114,4 +120,33 @@ class SetupPanel extends Command
 
         return $email;
     }
+
+    protected function setupBaseServer() {
+        $serverIP = '68.183.180.137';
+
+        $rsa = new RSA();
+        $rsa->setComment('sshpanel-key-vault');
+        $rsa->setPublicKeyFormat(RSA::PUBLIC_FORMAT_OPENSSH);
+
+        $keys = $rsa->createKey(2048);
+
+        $server = Server::create([
+            'name' => 'DEMO SERVER SG',
+            'ip'   => $serverIP,
+            'public_key'    => $keys['publickey'],
+            'private_key'   => $keys['privatekey'],
+            'current_state' => 'TO_RUN_SOFTWARE_SCRIPT',
+            'status'        => 'Select VPN Software',
+        ]);
+
+
+        // register server to softether software
+
+        $software = ServerUtils::getSoftware($softwareId);
+
+        if( $software instanceof ServerHook )  {
+            $software->beforeRun($server);
+        }
+    }
+
 }

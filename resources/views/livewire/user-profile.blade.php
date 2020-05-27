@@ -69,7 +69,7 @@
                                     <i class="material-icons">email</i>
                                 </span>
                                 <div class="form-line">
-                                    <input wire:model="email" type="email" class="form-control" placeholder="Email" name="email" required>
+                                    <input  type="email" class="form-control" placeholder="EMAIL CHANGING IS DISABLED IN DEMO MODE" name="email" required disabled>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                                     <i class="material-icons">lock</i>
                                 </span>
                                 <div class="form-line">
-                                    <input type="password" class="form-control" placeholder="PASSWORD CHANGING FOR ADMIN IS DISABLED IN DEMO MODE" name="password" disabled>
+                                    <input type="password" class="form-control" placeholder="PASSWORD CHANGING IS DISABLED IN DEMO MODE" name="password" disabled>
                                 </div>
                             </div>
                         </div>
