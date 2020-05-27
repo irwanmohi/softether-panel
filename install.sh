@@ -48,7 +48,6 @@ echo "RELOADING CONFIGURATION"
 sleep 10
 
 # BUILD COMPLETED, RUN THE SETUP
-./vessel artisan key:generate
 ./vessel artisan migrate --seed
 
 # Clearing STDOUT
