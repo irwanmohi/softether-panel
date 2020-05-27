@@ -188,7 +188,7 @@ if [ $# -gt 0 ]; then
         cp .env .env.bak.vessel
 
         if [ ! -z "$(grep "APP_URL" .env)" ]; then
-            $SEDCMD "s/APP_URL=.*/APP_URL=http://$(curl ipv4.icanhazip.com)/" .env
+            $SEDCMD "s/APP_URL=.*/APP_URL=http:\/\/$(curl ipv4.icanhazip.com)/" .env
         else
             echo "APP_URL=http://$(curl ipv4.icanhazip.com)" >> .env
         fi
