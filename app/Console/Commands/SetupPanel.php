@@ -60,18 +60,18 @@ class SetupPanel extends Command
 
         $this->comment("Welcome to SSHPANEL™ SoftEther Panel Installation!");
 
-        $panelName = $this->ask("Give your panel a name!");
+        $panelName = 'SOFTETHER PANEL 1.0';
 
         $this->info(sprintf("%s is nice! congratulations! 🥳", $panelName));
 
         $this->line('');
 
         $this->comment("Setup your first admin to login to the panel! 😀");
-        $userName      = $this->ask('What is your name 🎫');
-        $userEmail     = $this->askEmail();
-        $userPassword  = $this->secret('Password (input will be hidden) 🔐');
+        $userName      = 'SSHPANEL ADMIN';
+        $userEmail     = 'admin@sshpanel.io';
+        $userPassword  = 'password';
 
-        $supportPanel  = $this->confirm("Do you want to support us fighting for COVID-19 by displaying sshpanel.io URL on your panel? 🥺");
+        $supportPanel  = true;
 
         Setting::where('key', 'panel_name')->update(['value' => $panelName]);
 

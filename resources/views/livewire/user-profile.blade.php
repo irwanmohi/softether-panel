@@ -81,7 +81,7 @@
                                     <i class="material-icons">lock</i>
                                 </span>
                                 <div class="form-line">
-                                    <input wire:model="password" type="password" class="form-control" placeholder="Password (Leave blank unedited)" name="password" >
+                                    <input type="password" class="form-control" placeholder="PASSWORD CHANGING FOR ADMIN IS DISABLED IN DEMO MODE" name="password" disabled>
                                 </div>
                             </div>
                         </div>
