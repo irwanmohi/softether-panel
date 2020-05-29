@@ -127,8 +127,12 @@ class SynchronizeSoftetherAccountDetails implements ShouldQueue
 
         }
 
-        if( $userOnline && $this->softetherAccount->online_status == 'OFFLINE') {
-            $this->softetherAccount->update(['online_status' => 'ONLINE']);
+        if( $userOnline ) {
+
+            if( $this->softetherAccount->online_status == 'OFFLINE' ) {
+                $this->softetherAccount->update(['online_status' => 'ONLINE']);
+            }
+
         }
         else
         {
