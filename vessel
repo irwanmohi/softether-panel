@@ -190,15 +190,15 @@ if [ $# -gt 0 ]; then
         cp .env .env.bak.vessel
 
         if [ ! -z "$(grep "VIRTUAL_HOST" NETWORK)" ]; then
-            $SEDCMD "s/VIRTUAL_HOST=.*/VIRTUAL_HOST=$CURDIR\-softether\.sshpanel\.io/" .env
+            $SEDCMD "s/VIRTUAL_HOST=.*/VIRTUAL_HOST=$CURDIR\-softether\.sshpanel\.io/" NETWORK
         else
-            echo "VIRTUAL_HOST=$CURDIR-softether.sshpanel.io" >> .env
+            echo "VIRTUAL_HOST=$CURDIR-softether.sshpanel.io" >> NETWORK
         fi
 
         if [ ! -z "$(grep "LETSENCRYPT_HOST" NETWORK)" ]; then
-            $SEDCMD "s/LETSENCRYPT_HOST=.*/LETSENCRYPT_HOST=$CURDIR\-softether\.sshpanel\.io/" .env
+            $SEDCMD "s/LETSENCRYPT_HOST=.*/LETSENCRYPT_HOST=$CURDIR\-softether\.sshpanel\.io/" NETWORK
         else
-            echo "LETSENCRYPT_HOST=$CURDIR-softether.sshpanel.io" >> .env
+            echo "LETSENCRYPT_HOST=$CURDIR-softether.sshpanel.io" >> NETWORK
         fi
 
         if [ ! -z "$(grep "APP_URL" .env)" ]; then

@@ -13,6 +13,7 @@ services:
       WWWUSER: "${WWWUSER}"
     env_file:
      - NETWORK
+     - .env
     volumes:
      - .:/var/www/html
     networks:
