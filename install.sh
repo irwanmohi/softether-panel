@@ -33,11 +33,6 @@ bash vessel init
 # Ensure containers are not running
 ./vessel down
 
-# Delete the Docker images built previously
-docker image rm vessel/app
-docker image rm vessel/node
-docker volume rm $(docker volume ls -q)
-
 ./vessel start
 
 echo "RELOADING CONFIGURATION"

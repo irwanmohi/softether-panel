@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Optional;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,7 @@ class AppServiceProvider extends ServiceProvider
         Optional::macro('getValue', function() {
             return $this->value;
         });
+
+        URL::forceScheme('https');
     }
 }
