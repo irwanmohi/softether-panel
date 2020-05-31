@@ -1,2 +1,2 @@
-VIRTUAL_HOST=host.sshpanel.io
-LETSENCRYPT_HOST=host.sshpanel.io
+VIRTUAL_HOST=HOSTTOREPLACE-softether.sshpanel.io
+LETSENCRYPT_HOST=HOSTTOREPLACE-softether.sshpanel.io

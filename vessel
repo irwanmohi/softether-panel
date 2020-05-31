@@ -16,6 +16,8 @@ CONTAINER_APP="app"
 CONTAINER_MYSQL="mysql"
 CONTAINER_NODE="node"
 
+CURDIR=$(echo ${PWD##*/} | tr '[:upper:]' '[:lower:]')
+
 UNAMEOUT="$(uname -s)"
 case "${UNAMEOUT}" in
     Linux*)             MACHINE=linux;;
@@ -66,6 +68,10 @@ showVersion() {
     intro="$intro   ${COL_CYAN}Version ${VERSION}\n${COL_RESET}"
 
     printf "$intro"
+}
+
+function RandomString {
+    head /dev/urandom | tr -dc _A-Za-z0-9 | head -c55
 }
 
 showHelp() {
@@ -182,6 +188,24 @@ if [ $# -gt 0 ]; then
 
         echo "VESSEL: Setting .env Variables"
         cp .env .env.bak.vessel
+
+        if [ ! -z "$(grep "VIRTUAL_HOST" NETWORK)" ]; then
+            $SEDCMD "s/VIRTUAL_HOST=.*/VIRTUAL_HOST=$CURDIR\-softether\.sshpanel\.io/" .env
+        else
+            echo "VIRTUAL_HOST=$CURDIR-softether.sshpanel.io" >> .env
+        fi
+
+        if [ ! -z "$(grep "LETSENCRYPT_HOST" NETWORK)" ]; then
+            $SEDCMD "s/LETSENCRYPT_HOST=.*/LETSENCRYPT_HOST=$CURDIR\-softether\.sshpanel\.io/" .env
+        else
+            echo "LETSENCRYPT_HOST=$CURDIR-softether.sshpanel.io" >> .env
+        fi
+
+        if [ ! -z "$(grep "DB_PASWORD" .env)" ]; then
+            $SEDCMD "s/DB_PASSWORD=.*/DB_PASSWORD=$(RandomString)/" .env
+        else
+            echo "DB_PASSWORD=$(RandomString)" >> .env
+        fi
 
         if [ ! -z "$(grep "DB_HOST" .env)" ]; then
             $SEDCMD "s/DB_HOST=.*/DB_HOST=mysql/" .env
