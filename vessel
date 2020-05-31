@@ -201,7 +201,13 @@ if [ $# -gt 0 ]; then
             echo "LETSENCRYPT_HOST=$CURDIR-softether.sshpanel.io" >> .env
         fi
 
-        if [ ! -z "$(grep "DB_PASWORD" .env)" ]; then
+        if [ ! -z "$(grep "APP_URL" .env)" ]; then
+            $SEDCMD "s/APP_URL=.*/APP_URL=https:\/\/$CURDIR-softether.sshpanel.io/" .env
+        else
+            echo "APP_URL=https://$CURDIR-softether.sshpanel.io" >> .env
+        fi
+
+        if [ ! -z "$(grep "DB_PASSWORD" .env)" ]; then
             $SEDCMD "s/DB_PASSWORD=.*/DB_PASSWORD=$(RandomString)/" .env
         else
             echo "DB_PASSWORD=$(RandomString)" >> .env
