@@ -53,8 +53,6 @@ class ServerController extends Controller
             return view('servers.server-details', compact('server'));
 
         } catch(\Exception $e) {
-            dd($e);
-
             return abort(404);
         }
     }

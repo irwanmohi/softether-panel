@@ -95,7 +95,6 @@ class ProcessPlugin
 
 
         } catch(\Exception $e) {
-            dd($e);
         }
 
 
