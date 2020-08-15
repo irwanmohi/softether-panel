@@ -107,7 +107,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.html">{{ panel_name() }}</a>
+                <a class="navbar-brand" href="/">{{ panel_name() }}</a>
             </div>
         </div>
     </nav>
