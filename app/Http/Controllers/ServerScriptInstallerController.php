@@ -27,16 +27,16 @@ class ServerScriptInstallerController extends Controller
             $script   = ServerScript::find($scriptId);
             $server   = $script->server;
 
-            if( ! in_array(app()->environment(), $this->env)  ) {
-                if( $request->ip() != $server->ip ) return abort(404);
-            }
+            //if( ! in_array(app()->environment(), $this->env)  ) {
+                //if( $request->ip() != $server->ip ) return abort(404);
+            //}
 
             $script->update([
                 'last_fetch' => now(),
                 'fetched'    => $script->fetched + 1
             ]);
 
-            return '<pre>' . decrypt($script->script) . '</pre>';
+            return decrypt($script->script);
 
         } catch(\Exception $e) {
 
