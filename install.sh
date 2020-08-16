@@ -2,29 +2,8 @@
 
 
 # Set environment variables for dev
-if [ "$MACHINE" == "linux" ]; then
-    if grep -q Microsoft /proc/version; then # WSL
-        export XDEBUG_HOST=10.0.75.1
-    else
-        if [ "$(command -v ip)" ]; then
-            export XDEBUG_HOST=$(ip addr show docker0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
-        else
-            export XDEBUG_HOST=$(ifconfig docker0 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1)
-        fi
-    fi
-    SEDCMD="sed -i"
-elif [ "$MACHINE" == "mac" ]; then
-    export XDEBUG_HOST=$(ipconfig getifaddr en0) # Ethernet
 
-    if [ -z "$XDEBUG_HOST" ]; then
-        export XDEBUG_HOST=$(ipconfig getifaddr en1) # Wifi
-    fi
-    SEDCMD="sed -i .bak"
-elif [ "$MACHINE" == "mingw64" ]; then # Git Bash
-    export XDEBUG_HOST=10.0.75.1
-    SEDCMD="sed -i"
-fi
-
+SEDCMD="sed -i"
 export APP_PORT=${APP_PORT:-80}
 export MYSQL_PORT=${MYSQL_PORT:-3306}
 export WWWUSER=${WWWUSER:-$UID}
