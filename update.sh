@@ -2,6 +2,10 @@
 
 CONTAINER_APP="app"
 
+export APP_PORT=${APP_PORT:-80}
+export MYSQL_PORT=${MYSQL_PORT:-3306}
+export WWWUSER=${WWWUSER:-$UID}
+
 function Banner()
 {
     echo -e "\e[91m #########################################################################\e[0m"
@@ -29,9 +33,11 @@ echo "HIT CTRL-C NOW IF YOU WANT TO ABORT THE INSTALLATION!"
 
 sleep 10
 
-cp ENVIRONMENT .env
+if [ ! -f .env ]; then
+    cp ENVIRONMENT .env
+fi
 
-docker-compose up -d --force-recreate --no-deps --build $CONTAINER_APP
+docker-compose up -d --force-recreate --build $CONTAINER_APP
 
 echo "RELOADING CONFIGURATION"
 sleep 10
