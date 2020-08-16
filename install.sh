@@ -55,6 +55,11 @@ echo "HIT CTRL-C NOW IF YOU WANT TO ABORT THE INSTALLATION!"
 
 sleep 10
 
+# Setting up environment.
+
+IPADDRESS=$(curl ipv4.icanhazip.com)
+$SEDCMD "s|APP_URL=.*|APP_URL=http://$IPADDRESS|" ENVIRONMENT
+
 cp ENVIRONMENT .env
 
 bash vessel init
@@ -74,9 +79,10 @@ sleep 10
 
 # BUILD COMPLETED, RUN THE SETUP
 
-KEY=$(bash vessel artisan key:generate --show)
+KEY=$(bash vessel artisan key:generate --show | sed 's/\x1B[@A-Z\\\]^_]\|\x1B\[[0-9:;<=>?]*[-!"#$%&'"'"'()*+,.\/]*[][\\@A-Z^_`a-z{|}~]//g')
 
-$SEDCMD "s/APP_KEY=.*/APP_KEY=$KEY/" .env
+$SEDCMD "s|APP_KEY=.*|APP_KEY=$KEY|" ENVIRONMENT
+$SEDCMD "s|APP_KEY=.*|APP_KEY=$KEY|" .env
 
 ./vessel artisan migrate --seed
 
