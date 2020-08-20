@@ -15,6 +15,7 @@ services:
      - .:/var/www/html
     networks:
      - vessel
+    restart: always
   node:
     build:
       context: ./docker/node
@@ -43,6 +44,7 @@ services:
      # - ./docker/mysql/logs:/var/log/mysql
     networks:
      - vessel
+    restart: always
   redis:
     image: redis:alpine
     volumes:
