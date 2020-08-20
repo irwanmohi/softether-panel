@@ -51,6 +51,7 @@ services:
      - vesselredis:/data
     networks:
      - vessel
+    restart: always
 networks:
   vessel:
     driver: "bridge"
